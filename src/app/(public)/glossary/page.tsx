@@ -4,6 +4,8 @@ import GlossaryCard from '@/components/glossary/GlossaryCard'
 import GlossarySearch from '@/components/glossary/GlossarySearch'
 import type { GlossaryTerm } from '@/types'
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   searchParams: Promise<{ q?: string; category?: string }>
 }

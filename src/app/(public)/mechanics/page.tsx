@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
 
+export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Mechanics — UX Writers Guide' }
 
 export default async function MechanicsPage() {

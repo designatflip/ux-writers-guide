@@ -1,12 +1,14 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const supabase = await createClient()
 
   const [{ data: terms }, { data: guidelines }, { data: pillars }, { data: mechRules }] =
     await Promise.all([
-      supabase.from('glossary_terms').select('id, term, term_bahasa, category').eq('status', 'published').order('term'),
+      supabase.from('glossary_terms').select('id, term, term_bahasa, category').order('term'),
       supabase.from('guidelines').select('id, title, slug').order('order_index'),
       supabase.from('tone_pillars').select('id, title').order('order_index'),
       supabase.from('mechanics_rules').select('id, rule, example').order('order_index'),
