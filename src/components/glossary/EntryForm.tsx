@@ -71,17 +71,17 @@ export default function EntryForm({ entry }: EntryFormProps) {
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <Input
+          label="Term (Bahasa Indonesia)"
+          placeholder="e.g. Status kesalahan"
+          value={termBahasa}
+          onChange={(e) => setTermBahasa(e.target.value)}
+        />
+        <Input
           label="Term (English)"
           placeholder="e.g. Error state"
           value={term}
           onChange={(e) => setTerm(e.target.value)}
           required
-        />
-        <Input
-          label="Term (Bahasa Indonesia)"
-          placeholder="e.g. Status kesalahan"
-          value={termBahasa}
-          onChange={(e) => setTermBahasa(e.target.value)}
         />
       </div>
       <Textarea
