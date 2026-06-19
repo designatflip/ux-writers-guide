@@ -237,23 +237,23 @@ export default async function Home() {
                 backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(0,0,0,0.05) 14px, rgba(0,0,0,0.05) 15px)',
               }}
             >
-              <svg className="pointer-events-none absolute bottom-2 right-4 opacity-35" width="140" height="44" viewBox="0 0 140 44">
-                <polygon points="13,2 24,22 13,42 2,22" fill="none" stroke="black" strokeWidth="1.8"/>
-                <polygon points="47,2 58,22 47,42 36,22" fill="none" stroke="black" strokeWidth="1.8"/>
-                <polygon points="81,2 92,22 81,42 70,22" fill="none" stroke="black" strokeWidth="1.8"/>
-                <polygon points="115,2 126,22 115,42 104,22" fill="none" stroke="black" strokeWidth="1.8"/>
+              <svg className="pointer-events-none absolute bottom-2 right-4 opacity-40" width="140" height="44" viewBox="0 0 140 44">
+                <polygon points="13,2 24,22 13,42 2,22" fill="none" stroke="white" strokeWidth="1.8"/>
+                <polygon points="47,2 58,22 47,42 36,22" fill="none" stroke="white" strokeWidth="1.8"/>
+                <polygon points="81,2 92,22 81,42 70,22" fill="none" stroke="white" strokeWidth="1.8"/>
+                <polygon points="115,2 126,22 115,42 104,22" fill="none" stroke="white" strokeWidth="1.8"/>
               </svg>
               <div className="flex items-start justify-between">
-                <h2 className="text-4xl font-black leading-tight text-stone-900">
+                <h2 className="text-4xl font-black leading-tight text-white">
                   Tone of voice<br />
                   <span className="font-light">pillars</span>
                 </h2>
-                <Link href="/tone" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10 text-stone-900 transition-colors hover:bg-black/15">
+                <Link href="/tone" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                 </Link>
               </div>
-              <p className="mt-3 text-sm text-black/50">Our personality on the page — how we sound in everything we write.</p>
-              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-black/40">
+              <p className="mt-3 text-sm text-white/70">Our personality on the page — how we sound in everything we write.</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-white/50">
                 {pillarList.length} {pillarList.length === 1 ? 'pillar' : 'pillars'}
               </p>
             </div>
