@@ -66,8 +66,8 @@ export default async function Home() {
           </span>
         </h1>
         <p className="text-lg leading-relaxed" style={{ color: '#78716c', maxWidth: '38rem' }}>
-          Everything you need to communicate clearly, on-brand, and consistently —
-          from a single word to a full product campaign.
+          Everything you need to communicate clearly, on-brand, and consistently,
+          from a single word to a full product campaign, so we always sound like Flip!
         </p>
       </section>
 
