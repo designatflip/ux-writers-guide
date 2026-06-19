@@ -79,7 +79,7 @@ export default async function Home() {
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
-                backgroundColor: '#F5A623',
+                backgroundColor: '#FFB207',
                 backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
               }}
             >
@@ -129,7 +129,7 @@ export default async function Home() {
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
-                backgroundColor: '#DC2626',
+                backgroundColor: '#EE255C',
                 backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
               }}
             >
@@ -158,7 +158,7 @@ export default async function Home() {
                   {visibleGuidelines.map((g, i) => (
                     <li key={g.id}>
                       <Link href={`/guidelines/${g.slug}`} className="flex items-baseline gap-3 text-sm hover:opacity-70">
-                        <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#DC2626' }}>
+                        <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#EE255C' }}>
                           {String(i + 1).padStart(2, '0')}
                         </span>
                         <span className="font-medium text-stone-800">{g.title}</span>
@@ -167,7 +167,7 @@ export default async function Home() {
                   ))}
                   {guidelineList.length > 4 && (
                     <li>
-                      <Link href="/guidelines" className="text-xs font-medium" style={{ color: '#DC2626' }}>
+                      <Link href="/guidelines" className="text-xs font-medium" style={{ color: '#EE255C' }}>
                         +{guidelineList.length - 4} more
                       </Link>
                     </li>
@@ -182,7 +182,7 @@ export default async function Home() {
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
-                backgroundColor: '#3B82F6',
+                backgroundColor: '#5786CC',
                 backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
               }}
             >
@@ -210,7 +210,7 @@ export default async function Home() {
                 <ol className="flex flex-col gap-3">
                   {visibleRules.map((r, i) => (
                     <li key={r.id} className="flex items-baseline gap-3 text-sm">
-                      <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#3B82F6' }}>
+                      <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#5786CC' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <span className="font-medium text-stone-800">{r.rule}</span>
@@ -218,7 +218,7 @@ export default async function Home() {
                   ))}
                   {ruleList.length > 3 && (
                     <li>
-                      <Link href="/mechanics" className="text-xs font-medium" style={{ color: '#3B82F6' }}>
+                      <Link href="/mechanics" className="text-xs font-medium" style={{ color: '#5786CC' }}>
                         +{ruleList.length - 3} more
                       </Link>
                     </li>
@@ -233,8 +233,8 @@ export default async function Home() {
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
-                backgroundColor: '#84CC16',
-                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(0,0,0,0.05) 14px, rgba(0,0,0,0.05) 15px)',
+                backgroundColor: '#46BFAE',
+                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
               }}
             >
               <svg className="pointer-events-none absolute bottom-2 right-4 opacity-40" width="140" height="44" viewBox="0 0 140 44">
@@ -263,7 +263,7 @@ export default async function Home() {
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {pillarList.map((p, i) => {
-                    const pillColors = ['#F5A623', '#DC2626', '#3B82F6', '#84CC16', '#111827']
+                    const pillColors = ['#FFB207', '#EE255C', '#5786CC', '#46BFAE', '#B01D88']
                     return (
                       <span key={p.id} className="rounded-full px-4 py-1.5 text-sm font-bold text-white" style={{ backgroundColor: pillColors[i % pillColors.length] }}>
                         {p.title}
