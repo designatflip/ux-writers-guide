@@ -21,7 +21,6 @@ export default async function Home() {
 
   const visibleTerms = termList.slice(0, 6)
   const visibleGuidelines = guidelineList.slice(0, 4)
-  const visiblePillars = pillarList.slice(0, 6)
   const visibleRules = ruleList.slice(0, 3)
 
   return (
@@ -73,178 +72,206 @@ export default async function Home() {
 
       {/* Section cards */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-5 gap-4">
 
-          {/* Glossary — warm yellow */}
-          <div className="flex flex-col rounded-2xl p-6" style={{ backgroundColor: '#fdf8e7' }}>
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: '#fef3c7' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-                </svg>
+          {/* Glossary — amber, col-span-3 */}
+          <div className="col-span-3 overflow-hidden rounded-2xl shadow-sm">
+            <div
+              className="relative overflow-hidden p-6 pb-10"
+              style={{
+                backgroundColor: '#F5A623',
+                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
+              }}
+            >
+              <div
+                className="pointer-events-none absolute right-6 top-5 h-20 w-32 opacity-25"
+                style={{
+                  backgroundImage: 'radial-gradient(circle, white 1.5px, transparent 1.5px)',
+                  backgroundSize: '14px 14px',
+                }}
+              />
+              <div className="flex items-start justify-between">
+                <h2 className="text-4xl font-black leading-tight text-white">
+                  Word list<br />
+                  <span className="font-light">& glossary</span>
+                </h2>
+                <Link href="/glossary" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </Link>
               </div>
-              <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>
+              <p className="mt-3 text-sm text-white/70">Approved terms, preferred spellings, and definitions for every word we use.</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-white/50">
                 {termList.length} {termList.length === 1 ? 'term' : 'terms'}
-              </span>
+              </p>
             </div>
-            <h2 className="mb-1 text-lg font-bold" style={{ color: '#111827' }}>Word list &amp; glossary</h2>
-            <p className="mb-5 text-sm leading-relaxed" style={{ color: '#78716c' }}>
-              Approved terms, preferred spellings, and definitions for every word we use.
-            </p>
-            {termList.length === 0 ? (
-              <div className="flex flex-1 items-center justify-center rounded-xl border-2 border-dashed py-10" style={{ borderColor: '#f5d782' }}>
-                <p className="text-sm" style={{ color: '#b45309' }}>No terms yet — add the first one in the dashboard.</p>
-              </div>
-            ) : (
-              <div className="flex flex-1 flex-wrap gap-2">
-                {visibleTerms.map((t) => (
-                  <Link key={t.id} href="/glossary" className="inline-flex items-center gap-1.5 rounded-lg border border-amber-100 bg-white px-3 py-1.5 text-xs transition-colors hover:border-amber-200">
-                    <span className="font-semibold text-slate-800">{t.term}</span>
-                    {t.term_bahasa && <span style={{ color: '#a3a3a3' }}>{t.term_bahasa}</span>}
-                    {t.category && <span className="rounded px-1 py-0.5 text-[10px]" style={{ backgroundColor: '#fef3c7', color: '#b45309' }}>{t.category}</span>}
-                  </Link>
-                ))}
-                {termList.length > 6 && (
-                  <Link href="/glossary" className="inline-flex items-center rounded-lg border border-amber-100 bg-white px-3 py-1.5 text-xs font-medium transition-colors hover:border-amber-200" style={{ color: '#b45309' }}>
-                    +{termList.length - 6} more
-                  </Link>
-                )}
-              </div>
-            )}
-            <div className="mt-5 flex items-center justify-between">
-              <Link href="/glossary" className="text-sm font-semibold transition-opacity hover:opacity-70" style={{ color: '#d97706' }}>Open section</Link>
-              <Link href="/glossary" className="flex h-7 w-7 items-center justify-center rounded-full text-sm" style={{ backgroundColor: '#fef3c7', color: '#d97706' }}>→</Link>
+            <div className="bg-white p-5">
+              {termList.length === 0 ? (
+                <p className="text-sm text-stone-400">No terms yet — add the first one in the dashboard.</p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {visibleTerms.map((t) => (
+                    <Link key={t.id} href="/glossary" className="rounded-full border border-stone-200 bg-stone-50 px-3.5 py-1.5 text-sm text-stone-700 transition-colors hover:border-stone-300">
+                      {t.term_bahasa || t.term}
+                    </Link>
+                  ))}
+                  {termList.length > 6 && (
+                    <Link href="/glossary" className="rounded-full border border-dashed border-stone-300 px-3.5 py-1.5 text-sm text-stone-400 transition-colors hover:border-stone-400">
+                      +{termList.length - 6} more
+                    </Link>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Guidelines — light pink */}
-          <div className="flex flex-col rounded-2xl p-6" style={{ backgroundColor: '#fde8e2' }}>
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: '#fecaca' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                </svg>
+          {/* Guidelines — red, col-span-2 */}
+          <div className="col-span-2 overflow-hidden rounded-2xl shadow-sm">
+            <div
+              className="relative overflow-hidden p-6 pb-10"
+              style={{
+                backgroundColor: '#DC2626',
+                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
+              }}
+            >
+              <svg className="pointer-events-none absolute bottom-3 right-4 opacity-40" width="120" height="30" viewBox="0 0 120 30">
+                <path d="M0 15 Q15 0 30 15 Q45 30 60 15 Q75 0 90 15 Q105 30 120 15" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+              </svg>
+              <div className="flex items-start justify-between">
+                <h2 className="text-4xl font-black leading-tight text-white">
+                  Writing<br />
+                  <span className="font-light">guidelines</span>
+                </h2>
+                <Link href="/guidelines" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </Link>
               </div>
-              <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: '#fecaca', color: '#ef4444' }}>
+              <p className="mt-3 text-sm text-white/70">The rules that keep our writing consistent, clear, and on-brand.</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-white/50">
                 {guidelineList.length} {guidelineList.length === 1 ? 'guideline' : 'guidelines'}
-              </span>
+              </p>
             </div>
-            <h2 className="mb-1 text-lg font-bold" style={{ color: '#111827' }}>Writing guidelines</h2>
-            <p className="mb-5 text-sm leading-relaxed" style={{ color: '#78716c' }}>
-              The rules that keep our writing consistent, clear, and on-brand across every touchpoint.
-            </p>
-            {guidelineList.length === 0 ? (
-              <div className="flex flex-1 items-center justify-center rounded-xl border-2 border-dashed py-10" style={{ borderColor: '#fca5a5' }}>
-                <p className="text-sm" style={{ color: '#dc2626' }}>No guidelines yet — add the first one in the dashboard.</p>
-              </div>
-            ) : (
-              <ol className="flex flex-1 flex-col gap-2">
-                {visibleGuidelines.map((g, i) => (
-                  <li key={g.id}>
-                    <Link href={`/guidelines/${g.slug}`} className="flex items-center gap-3 rounded-xl border border-red-100 bg-white px-4 py-2.5 text-sm transition-colors hover:border-red-200">
-                      <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#ef4444' }}>{i + 1}</span>
-                      <span className="font-medium text-slate-800">{g.title}</span>
-                    </Link>
-                  </li>
-                ))}
-                {guidelineList.length > 4 && (
-                  <li>
-                    <Link href="/guidelines" className="flex items-center gap-3 rounded-xl border border-red-100 bg-white px-4 py-2.5 text-sm font-medium transition-colors hover:border-red-200" style={{ color: '#dc2626' }}>
-                      +{guidelineList.length - 4} more
-                    </Link>
-                  </li>
-                )}
-              </ol>
-            )}
-            <div className="mt-5 flex items-center justify-between">
-              <Link href="/guidelines" className="text-sm font-semibold transition-opacity hover:opacity-70" style={{ color: '#ef4444' }}>Open section</Link>
-              <Link href="/guidelines" className="flex h-7 w-7 items-center justify-center rounded-full text-sm" style={{ backgroundColor: '#fecaca', color: '#ef4444' }}>→</Link>
+            <div className="bg-white p-5">
+              {guidelineList.length === 0 ? (
+                <p className="text-sm text-stone-400">No guidelines yet — add the first one in the dashboard.</p>
+              ) : (
+                <ol className="flex flex-col gap-3">
+                  {visibleGuidelines.map((g, i) => (
+                    <li key={g.id}>
+                      <Link href={`/guidelines/${g.slug}`} className="flex items-baseline gap-3 text-sm hover:opacity-70">
+                        <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#DC2626' }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="font-medium text-stone-800">{g.title}</span>
+                      </Link>
+                    </li>
+                  ))}
+                  {guidelineList.length > 4 && (
+                    <li>
+                      <Link href="/guidelines" className="text-xs font-medium" style={{ color: '#DC2626' }}>
+                        +{guidelineList.length - 4} more
+                      </Link>
+                    </li>
+                  )}
+                </ol>
+              )}
             </div>
           </div>
 
-          {/* Tone of Voice — mint teal */}
-          <div className="flex flex-col rounded-2xl p-6" style={{ backgroundColor: '#e6faf6' }}>
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: '#ccfbf1' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/>
-                </svg>
+          {/* Mechanics — blue, col-span-2 */}
+          <div className="col-span-2 overflow-hidden rounded-2xl shadow-sm">
+            <div
+              className="relative overflow-hidden p-6 pb-10"
+              style={{
+                backgroundColor: '#3B82F6',
+                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
+              }}
+            >
+              <svg className="pointer-events-none absolute bottom-3 right-4 opacity-40" width="120" height="30" viewBox="0 0 120 30">
+                <path d="M0 15 Q15 0 30 15 Q45 30 60 15 Q75 0 90 15 Q105 30 120 15" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+              </svg>
+              <div className="flex items-start justify-between">
+                <h2 className="text-4xl font-black leading-tight text-white">
+                  Punctuation<br />
+                  <span className="font-light">& mechanics</span>
+                </h2>
+                <Link href="/mechanics" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </Link>
               </div>
-              <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: '#ccfbf1', color: '#0d9488' }}>
-                {pillarList.length} {pillarList.length === 1 ? 'pillar' : 'pillars'}
-              </span>
-            </div>
-            <h2 className="mb-1 text-lg font-bold" style={{ color: '#111827' }}>Tone of voice</h2>
-            <p className="mb-5 text-sm leading-relaxed" style={{ color: '#78716c' }}>
-              Our personality on the page — how we sound in everything we write.
-            </p>
-            {pillarList.length === 0 ? (
-              <div className="flex flex-1 items-center justify-center rounded-xl border-2 border-dashed py-10" style={{ borderColor: '#99f6e4' }}>
-                <p className="text-sm" style={{ color: '#0f766e' }}>No pillars yet — add the first one in the dashboard.</p>
-              </div>
-            ) : (
-              <div className="flex flex-1 flex-wrap gap-2">
-                {visiblePillars.map((p) => (
-                  <span key={p.id} className="inline-flex items-center rounded-xl border border-teal-100 bg-white px-3 py-2 text-sm font-medium text-slate-800">
-                    {p.title}
-                  </span>
-                ))}
-                {pillarList.length > 6 && (
-                  <Link href="/tone" className="inline-flex items-center rounded-xl border border-teal-100 bg-white px-3 py-2 text-sm font-medium transition-colors hover:border-teal-200" style={{ color: '#0f766e' }}>
-                    +{pillarList.length - 6} more
-                  </Link>
-                )}
-              </div>
-            )}
-            <div className="mt-5 flex items-center justify-between">
-              <Link href="/tone" className="text-sm font-semibold transition-opacity hover:opacity-70" style={{ color: '#0d9488' }}>Open section</Link>
-              <Link href="/tone" className="flex h-7 w-7 items-center justify-center rounded-full text-sm" style={{ backgroundColor: '#ccfbf1', color: '#0d9488' }}>→</Link>
-            </div>
-          </div>
-
-          {/* Mechanics — lavender */}
-          <div className="flex flex-col rounded-2xl p-6" style={{ backgroundColor: '#eef0fb' }}>
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ backgroundColor: '#e0e7ff' }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
-                </svg>
-              </div>
-              <span className="rounded-full px-2.5 py-1 text-xs font-semibold" style={{ backgroundColor: '#e0e7ff', color: '#6366f1' }}>
+              <p className="mt-3 text-sm text-white/70">The technical rules that keep our writing polished across every channel.</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-white/50">
                 {ruleList.length} {ruleList.length === 1 ? 'rule' : 'rules'}
-              </span>
+              </p>
             </div>
-            <h2 className="mb-1 text-lg font-bold" style={{ color: '#111827' }}>Mechanics</h2>
-            <p className="mb-5 text-sm leading-relaxed" style={{ color: '#78716c' }}>
-              The technical rules that keep our writing polished across every channel.
-            </p>
-            {ruleList.length === 0 ? (
-              <div className="flex flex-1 items-center justify-center rounded-xl border-2 border-dashed py-10" style={{ borderColor: '#c7d2fe' }}>
-                <p className="text-sm" style={{ color: '#4338ca' }}>No rules yet — add the first one in the dashboard.</p>
+            <div className="bg-white p-5">
+              {ruleList.length === 0 ? (
+                <p className="text-sm text-stone-400">No rules yet — add the first one in the dashboard.</p>
+              ) : (
+                <ol className="flex flex-col gap-3">
+                  {visibleRules.map((r, i) => (
+                    <li key={r.id} className="flex items-baseline gap-3 text-sm">
+                      <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#3B82F6' }}>
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="font-medium text-stone-800">{r.rule}</span>
+                    </li>
+                  ))}
+                  {ruleList.length > 3 && (
+                    <li>
+                      <Link href="/mechanics" className="text-xs font-medium" style={{ color: '#3B82F6' }}>
+                        +{ruleList.length - 3} more
+                      </Link>
+                    </li>
+                  )}
+                </ol>
+              )}
+            </div>
+          </div>
+
+          {/* Tone — lime green, col-span-3 */}
+          <div className="col-span-3 overflow-hidden rounded-2xl shadow-sm">
+            <div
+              className="relative overflow-hidden p-6 pb-10"
+              style={{
+                backgroundColor: '#84CC16',
+                backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(0,0,0,0.05) 14px, rgba(0,0,0,0.05) 15px)',
+              }}
+            >
+              <svg className="pointer-events-none absolute bottom-2 right-4 opacity-35" width="140" height="44" viewBox="0 0 140 44">
+                <polygon points="13,2 24,22 13,42 2,22" fill="none" stroke="black" strokeWidth="1.8"/>
+                <polygon points="47,2 58,22 47,42 36,22" fill="none" stroke="black" strokeWidth="1.8"/>
+                <polygon points="81,2 92,22 81,42 70,22" fill="none" stroke="black" strokeWidth="1.8"/>
+                <polygon points="115,2 126,22 115,42 104,22" fill="none" stroke="black" strokeWidth="1.8"/>
+              </svg>
+              <div className="flex items-start justify-between">
+                <h2 className="text-4xl font-black leading-tight text-stone-900">
+                  Tone of voice<br />
+                  <span className="font-light">pillars</span>
+                </h2>
+                <Link href="/tone" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10 text-stone-900 transition-colors hover:bg-black/15">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                </Link>
               </div>
-            ) : (
-              <div className="flex flex-1 flex-col gap-2">
-                {visibleRules.map((r) => (
-                  <div key={r.id} className="rounded-xl border border-indigo-100 bg-white px-4 py-3">
-                    <p className="mb-1 text-[11px] font-medium" style={{ color: '#818cf8' }}>{r.rule}</p>
-                    {r.example && (
-                      <p className="font-mono text-xs text-slate-600">
-                        <span className="mr-1" style={{ color: '#6366f1' }}>✓</span>
-                        {r.example}
-                      </p>
-                    )}
-                  </div>
-                ))}
-                {ruleList.length > 3 && (
-                  <Link href="/mechanics" className="rounded-xl border border-indigo-100 bg-white px-4 py-3 text-xs font-medium transition-colors hover:border-indigo-200" style={{ color: '#4338ca' }}>
-                    +{ruleList.length - 3} more rules
-                  </Link>
-                )}
-              </div>
-            )}
-            <div className="mt-5 flex items-center justify-between">
-              <Link href="/mechanics" className="text-sm font-semibold transition-opacity hover:opacity-70" style={{ color: '#6366f1' }}>Open section</Link>
-              <Link href="/mechanics" className="flex h-7 w-7 items-center justify-center rounded-full text-sm" style={{ backgroundColor: '#e0e7ff', color: '#6366f1' }}>→</Link>
+              <p className="mt-3 text-sm text-black/50">Our personality on the page — how we sound in everything we write.</p>
+              <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-black/40">
+                {pillarList.length} {pillarList.length === 1 ? 'pillar' : 'pillars'}
+              </p>
+            </div>
+            <div className="bg-white p-5">
+              {pillarList.length === 0 ? (
+                <p className="text-sm text-stone-400">No pillars yet — add the first one in the dashboard.</p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {pillarList.map((p, i) => {
+                    const pillColors = ['#F5A623', '#DC2626', '#3B82F6', '#84CC16', '#111827']
+                    return (
+                      <span key={p.id} className="rounded-full px-4 py-1.5 text-sm font-bold text-white" style={{ backgroundColor: pillColors[i % pillColors.length] }}>
+                        {p.title}
+                      </span>
+                    )
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
