@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import CyclingWord from '@/components/CyclingWord'
 
 export const dynamic = 'force-dynamic'
 
@@ -60,9 +61,7 @@ export default async function Home() {
         </div>
         <h1 className="mb-5 text-7xl font-black leading-none tracking-tight" style={{ color: '#111827' }}>
           Write like{' '}
-          <span style={{ textDecoration: 'underline', textDecorationColor: '#f59e0b', textDecorationThickness: '6px', textUnderlineOffset: '8px' }}>
-            one team.
-          </span>
+          <CyclingWord />
         </h1>
         <p className="text-lg leading-relaxed" style={{ color: '#78716c', maxWidth: '38rem' }}>
           Everything you need to communicate clearly, on-brand, and consistently,
