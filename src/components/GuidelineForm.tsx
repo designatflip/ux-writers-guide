@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import ReactMarkdown from 'react-markdown'
 import { guidelineStore } from '@/lib/store'
 import { slugify } from '@/lib/utils'
 import Button from '@/components/ui/Button'
@@ -28,6 +29,7 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
   const [loading, setLoading] = useState(false)
   const [converting, setConverting] = useState(false)
   const [error, setError] = useState('')
+  const [preview, setPreview] = useState<{ title: string; slug: string; content: string } | null>(null)
 
   function handleTitleChange(val: string) {
     setTitle(val)
@@ -161,7 +163,7 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
       } else {
         await guidelineStore.create(payload)
       }
-      router.push('/entries/guidelines')
+      setPreview({ title, slug, content })
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
       setLoading(false)
@@ -181,128 +183,192 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off" className="max-w-2xl space-y-4">
-      <Input
-        label="Title"
-        placeholder="e.g. Writing for errors"
-        value={title}
-        onChange={(e) => handleTitleChange(e.target.value)}
-        required
-      />
-      <Input
-        label="Slug"
-        placeholder="writing-for-errors"
-        value={slug}
-        onChange={(e) => setSlug(e.target.value)}
-        required
-      />
-      <Input
-        label="Order index"
-        type="number"
-        min={0}
-        value={orderIndex}
-        onChange={(e) => setOrderIndex(e.target.value)}
-      />
+    <>
+      <form onSubmit={handleSubmit} autoComplete="off" className="max-w-2xl space-y-4">
+        <Input
+          label="Title"
+          placeholder="e.g. Writing for errors"
+          value={title}
+          onChange={(e) => handleTitleChange(e.target.value)}
+          required
+        />
+        <Input
+          label="Slug"
+          placeholder="writing-for-errors"
+          value={slug}
+          onChange={(e) => setSlug(e.target.value)}
+          required
+        />
+        <Input
+          label="Order index"
+          type="number"
+          min={0}
+          value={orderIndex}
+          onChange={(e) => setOrderIndex(e.target.value)}
+        />
 
-      <div className="flex flex-col gap-1.5">
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-slate-700">Content</label>
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            disabled={converting}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
-          >
-            {converting ? (
-              <>
-                <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
-                </svg>
-                Converting…
-              </>
-            ) : (
-              <>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
-                </svg>
-                Upload .docx
-              </>
-            )}
-          </button>
-          <input
-            ref={fileRef}
-            type="file"
-            accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            className="hidden"
-            onChange={handleDocUpload}
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium text-slate-700">Content</label>
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={converting}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+            >
+              {converting ? (
+                <>
+                  <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                  </svg>
+                  Converting…
+                </>
+              ) : (
+                <>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
+                  Upload .docx
+                </>
+              )}
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              className="hidden"
+              onChange={handleDocUpload}
+            />
+          </div>
+
+          {/* Formatting toolbar */}
+          <div className="flex flex-wrap items-center gap-px rounded-t-lg border border-b-0 border-slate-200 bg-slate-50 px-2 py-1.5">
+            <ToolbarBtn onClick={() => applyFormat('h1')} title="Heading 1">H1</ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('h2')} title="Heading 2">H2</ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('h3')} title="Heading 3">H3</ToolbarBtn>
+            <ToolbarDivider />
+            <ToolbarBtn onClick={() => applyFormat('bold')} title="Bold">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
+            </ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('italic')} title="Italic">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
+            </ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('code')} title="Inline code">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </ToolbarBtn>
+            <ToolbarDivider />
+            <ToolbarBtn onClick={() => applyFormat('ul')} title="Bullet list">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
+            </ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('ol')} title="Numbered list">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 10h2" stroke="currentColor" strokeWidth="1.8"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" stroke="currentColor" strokeWidth="1.8"/></svg>
+            </ToolbarBtn>
+            <ToolbarDivider />
+            <ToolbarBtn onClick={() => applyFormat('quote')} title="Blockquote">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+            </ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('hr')} title="Horizontal rule">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="2" y1="12" x2="22" y2="12"/></svg>
+            </ToolbarBtn>
+            <ToolbarBtn onClick={() => applyFormat('link')} title="Link">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </ToolbarBtn>
+          </div>
+
+          <Textarea
+            ref={textareaRef}
+            placeholder="Write the guideline content here, or upload a .docx file above…"
+            rows={14}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="rounded-t-none border-t-0 focus:border-slate-200 focus:ring-0"
           />
         </div>
 
-        {/* Formatting toolbar */}
-        <div className="flex flex-wrap items-center gap-px rounded-t-lg border border-b-0 border-slate-200 bg-slate-50 px-2 py-1.5">
-          {/* Headings */}
-          <ToolbarBtn onClick={() => applyFormat('h1')} title="Heading 1">H1</ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('h2')} title="Heading 2">H2</ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('h3')} title="Heading 3">H3</ToolbarBtn>
-          <ToolbarDivider />
-          {/* Inline */}
-          <ToolbarBtn onClick={() => applyFormat('bold')} title="Bold">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
-          </ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('italic')} title="Italic">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
-          </ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('code')} title="Inline code">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </ToolbarBtn>
-          <ToolbarDivider />
-          {/* Lists */}
-          <ToolbarBtn onClick={() => applyFormat('ul')} title="Bullet list">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="9" y1="6" x2="20" y2="6"/><line x1="9" y1="12" x2="20" y2="12"/><line x1="9" y1="18" x2="20" y2="18"/><circle cx="4" cy="6" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.5" fill="currentColor" stroke="none"/></svg>
-          </ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('ol')} title="Numbered list">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4" stroke="currentColor" strokeWidth="1.8"/><path d="M4 10h2" stroke="currentColor" strokeWidth="1.8"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" stroke="currentColor" strokeWidth="1.8"/></svg>
-          </ToolbarBtn>
-          <ToolbarDivider />
-          {/* Quote, HR, Link */}
-          <ToolbarBtn onClick={() => applyFormat('quote')} title="Blockquote">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
-          </ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('hr')} title="Horizontal rule">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="2" y1="12" x2="22" y2="12"/></svg>
-          </ToolbarBtn>
-          <ToolbarBtn onClick={() => applyFormat('link')} title="Link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-          </ToolbarBtn>
-        </div>
+        {error && <p className="text-sm text-red-600">{error}</p>}
 
-        <Textarea
-          ref={textareaRef}
-          placeholder="Write the guideline content here, or upload a .docx file above…"
-          rows={14}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          className="rounded-t-none border-t-0 focus:border-slate-200 focus:ring-0"
-        />
-      </div>
-
-      {error && <p className="text-sm text-red-600">{error}</p>}
-
-      <div className="flex items-center gap-3 pt-2">
-        <Button type="submit" loading={loading}>
-          {isEditing ? 'Save changes' : 'Create guideline'}
-        </Button>
-        <Button type="button" variant="secondary" onClick={() => router.back()} disabled={loading}>
-          Cancel
-        </Button>
-        {isEditing && (
-          <Button type="button" variant="danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
-            Delete
+        <div className="flex items-center gap-3 pt-2">
+          <Button type="submit" loading={loading}>
+            {isEditing ? 'Save changes' : 'Create guideline'}
           </Button>
-        )}
-      </div>
-    </form>
+          <Button type="button" variant="secondary" onClick={() => router.back()} disabled={loading}>
+            Cancel
+          </Button>
+          {isEditing && (
+            <Button type="button" variant="danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
+              Delete
+            </Button>
+          )}
+        </div>
+      </form>
+
+      {/* Preview modal */}
+      {preview && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-6 pt-16">
+          <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
+            {/* Modal header */}
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </span>
+                <span className="text-sm font-semibold text-slate-700">
+                  {isEditing ? 'Changes saved' : 'Guideline published'}
+                </span>
+              </div>
+              <button
+                onClick={() => router.push('/entries/guidelines')}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+
+            {/* Rendered preview */}
+            <div className="px-8 py-6">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400">Preview</p>
+              <h1 className="mb-6 text-2xl font-bold text-slate-900">{preview.title}</h1>
+              {preview.content ? (
+                <div className="prose prose-slate max-w-none">
+                  <ReactMarkdown
+                    components={{
+                      img: ({ src, alt }) =>
+                        src ? <img src={src} alt={alt ?? ''} className="max-w-full rounded" /> : null,
+                    }}
+                  >
+                    {preview.content}
+                  </ReactMarkdown>
+                </div>
+              ) : (
+                <p className="text-slate-400">No content.</p>
+              )}
+            </div>
+
+            {/* Modal footer */}
+            <div className="flex items-center justify-between border-t border-slate-100 px-6 py-4">
+              <button
+                onClick={() => router.push('/entries/guidelines')}
+                className="text-sm text-slate-500 hover:text-slate-800"
+              >
+                ← Back to guidelines
+              </button>
+              <a
+                href={`/guidelines/${preview.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+              >
+                View live page
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
