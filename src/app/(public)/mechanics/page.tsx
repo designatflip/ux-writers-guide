@@ -1,8 +1,139 @@
 import { createClient } from '@/lib/supabase/server'
 import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
+import type { MechanicsRule, CapitalizationData, RepeaterData } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Mechanics — Flip Communication Hub' }
+
+// ── Card variants ─────────────────────────────────────────────────────────────
+
+function LegacyRuleCard({ rule }: { rule: MechanicsRule }) {
+  return (
+    <div
+      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
+      style={{ backgroundColor: '#f5f3ff' }}
+    >
+      <p className="mb-3 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      {(rule.example || rule.dont_example) && (
+        <div className={`grid gap-2 ${rule.example && rule.dont_example ? 'grid-cols-2' : 'grid-cols-1'}`}>
+          {rule.example && (
+            <div className="rounded-lg border border-green-100 bg-green-50 px-3 py-2">
+              <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
+              <p className="font-mono text-sm text-slate-700">{rule.example}</p>
+            </div>
+          )}
+          {rule.dont_example && (
+            <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2">
+              <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
+              <p className="font-mono text-sm text-slate-700">{rule.dont_example}</p>
+            </div>
+          )}
+        </div>
+      )}
+      {rule.description && (
+        <p className="mt-3 text-sm leading-relaxed text-slate-500">{rule.description}</p>
+      )}
+    </div>
+  )
+}
+
+function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
+  const data = rule.data as CapitalizationData
+  return (
+    <div
+      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
+      style={{ backgroundColor: '#f5f3ff' }}
+    >
+      <p className="mb-1 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      {rule.description && (
+        <p className="mb-4 text-sm text-slate-500">{rule.description}</p>
+      )}
+      {(data.textComponents.length > 0 || data.uiComponents.length > 0) && (
+        <div className="grid grid-cols-2 gap-4">
+          {data.textComponents.length > 0 && (
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Text components</p>
+              <ul className="space-y-1">
+                {data.textComponents.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-slate-700">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {data.uiComponents.length > 0 && (
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">UI components</p>
+              <ul className="space-y-1">
+                {data.uiComponents.map((item) => (
+                  <li key={item} className="flex items-center gap-2 text-sm text-slate-700">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function RepeaterCard({ rule }: { rule: MechanicsRule }) {
+  const data = rule.data as RepeaterData
+  return (
+    <div
+      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
+      style={{ backgroundColor: '#f5f3ff' }}
+    >
+      <p className="mb-3 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      <div className="space-y-4">
+        {data.rules.map((entry, i) => (
+          <div key={i} className={i > 0 ? 'border-t border-slate-200 pt-4' : ''}>
+            {entry.ruleText && (
+              <p className="mb-2 text-sm font-medium text-slate-700">{entry.ruleText}</p>
+            )}
+            {(entry.doExamples.length > 0 || entry.dontExamples.length > 0) && (
+              <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+                {entry.doExamples.length > 0 && (
+                  <div className="rounded-lg border border-green-100 bg-green-50 px-3 py-2">
+                    <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
+                    <ul className="space-y-0.5">
+                      {entry.doExamples.map((ex, j) => (
+                        <li key={j} className="font-mono text-sm text-slate-700">{ex}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {entry.dontExamples.length > 0 && (
+                  <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2">
+                    <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
+                    <ul className="space-y-0.5">
+                      {entry.dontExamples.map((ex, j) => (
+                        <li key={j} className="font-mono text-sm text-slate-700">{ex}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function MechanicsRuleCard({ rule }: { rule: MechanicsRule }) {
+  if (!rule.data) return <LegacyRuleCard rule={rule} />
+  if (rule.data.kind === 'capitalization') return <CapitalizationCard rule={rule} />
+  return <RepeaterCard rule={rule} />
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function MechanicsPage() {
   const supabase = await createClient()
@@ -13,7 +144,6 @@ export default async function MechanicsPage() {
 
   const rules = data ?? []
 
-  // Sort so known categories appear in order, unknown/null at the end
   const categoryOrder = (cat: string | null) => {
     const idx = MECHANICS_CATEGORIES.indexOf(cat as never)
     return idx === -1 ? 999 : idx
@@ -42,35 +172,11 @@ export default async function MechanicsPage() {
             return (
               <div key={r.id}>
                 {showHeading && (
-                  <h2 className={`${i > 0 ? 'mt-8' : ''} mb-3 text-lg font-semibold text-slate-900 border-b border-slate-200 pb-2`}>
+                  <h2 className={`${i > 0 ? 'mt-8' : ''} mb-3 border-b border-slate-200 pb-2 text-lg font-semibold text-slate-900`}>
                     {r.category}
                   </h2>
                 )}
-                <div
-                  className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
-                  style={{ backgroundColor: '#f5f3ff' }}
-                >
-                  <p className="mb-3 text-sm font-semibold text-slate-800">{r.rule}</p>
-                  {(r.example || r.dont_example) && (
-                    <div className={`grid gap-2 ${r.example && r.dont_example ? 'grid-cols-2' : 'grid-cols-1'}`}>
-                      {r.example && (
-                        <div className="rounded-lg bg-green-50 border border-green-100 px-3 py-2">
-                          <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
-                          <p className="font-mono text-sm text-slate-700">{r.example}</p>
-                        </div>
-                      )}
-                      {r.dont_example && (
-                        <div className="rounded-lg bg-red-50 border border-red-100 px-3 py-2">
-                          <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
-                          <p className="font-mono text-sm text-slate-700">{r.dont_example}</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {r.description && (
-                    <p className="mt-3 text-sm leading-relaxed text-slate-500">{r.description}</p>
-                  )}
-                </div>
+                <MechanicsRuleCard rule={r as MechanicsRule} />
               </div>
             )
           })}

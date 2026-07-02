@@ -3,14 +3,30 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { mechanicsRuleStore } from '@/lib/store'
-import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
+import { MECHANICS_CATEGORIES, getMechanicsFormKind } from '@/lib/mechanics-categories'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
-import Textarea from '@/components/ui/Textarea'
-import type { MechanicsRule } from '@/types'
+import CapitalizationFormFields from '@/components/mechanics/CapitalizationFormFields'
+import RepeaterFormFields from '@/components/mechanics/RepeaterFormFields'
+import type { MechanicsRule, RuleEntry, CapitalizationData, RepeaterData } from '@/types'
 
 interface MechanicsRuleFormProps {
   rule?: MechanicsRule
+}
+
+function blankRepeaterFromLegacy(rule?: MechanicsRule): RuleEntry[] {
+  if (!rule) return [{ ruleText: '', doExamples: [], dontExamples: [] }]
+  if (rule.data?.kind === 'repeater') return rule.data.rules
+  return [{
+    ruleText: '',
+    doExamples: rule.example ? [rule.example] : [],
+    dontExamples: rule.dont_example ? [rule.dont_example] : [],
+  }]
+}
+
+function initCapitalization(rule?: MechanicsRule) {
+  if (rule?.data?.kind === 'capitalization') return rule.data
+  return { textComponents: [] as string[], uiComponents: [] as string[] }
 }
 
 export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
@@ -19,26 +35,65 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
 
   const [category, setCategory] = useState(rule?.category ?? '')
   const [ruleText, setRuleText] = useState(rule?.rule ?? '')
-  const [example, setExample] = useState(rule?.example ?? '')
-  const [dontExample, setDontExample] = useState(rule?.dont_example ?? '')
-  const [description, setDescription] = useState(rule?.description ?? '')
   const [orderIndex, setOrderIndex] = useState(String(rule?.order_index ?? 0))
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  // Capitalization-specific
+  const initCap = initCapitalization(rule)
+  const [description, setDescription] = useState(rule?.description ?? '')
+  const [textComponents, setTextComponents] = useState<string[]>(initCap.textComponents)
+  const [uiComponents, setUiComponents] = useState<string[]>(initCap.uiComponents)
+
+  // Repeater-specific
+  const [repeaterRules, setRepeaterRules] = useState<RuleEntry[]>(blankRepeaterFromLegacy(rule))
+
+  const currentKind = category ? getMechanicsFormKind(category) : null
+
+  function handleCategoryChange(newCategory: string) {
+    if (!newCategory) { setCategory(''); return }
+    const newKind = getMechanicsFormKind(newCategory)
+    if (currentKind && newKind !== currentKind) {
+      // Reset structured state when switching between form kinds
+      setDescription('')
+      setTextComponents([])
+      setUiComponents([])
+      setRepeaterRules([{ ruleText: '', doExamples: [], dontExamples: [] }])
+    }
+    setCategory(newCategory)
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!category) { setError('Please select a category'); return }
     setLoading(true)
     setError('')
+
     try {
-      const payload = {
-        category: category || null,
-        rule: ruleText,
-        example: example || null,
-        dont_example: dontExample || null,
-        description: description || null,
-        order_index: parseInt(orderIndex) || 0,
+      const kind = getMechanicsFormKind(category)
+      let data: CapitalizationData | RepeaterData
+      let example: string | null = null
+      let dontExample: string | null = null
+
+      if (kind === 'capitalization') {
+        data = { kind: 'capitalization', textComponents, uiComponents }
+      } else {
+        data = { kind: 'repeater', rules: repeaterRules }
+        // Populate flat columns from first rule's first examples for list-view compat
+        example = repeaterRules[0]?.doExamples[0] ?? null
+        dontExample = repeaterRules[0]?.dontExamples[0] ?? null
       }
+
+      const payload = {
+        category,
+        rule: ruleText,
+        description: kind === 'capitalization' ? (description || null) : null,
+        example,
+        dont_example: dontExample,
+        order_index: parseInt(orderIndex) || 0,
+        data,
+      }
+
       if (isEditing) {
         await mechanicsRuleStore.update(rule.id, payload)
       } else {
@@ -63,15 +118,21 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
     }
   }
 
+  const typePlaceholder =
+    currentKind === 'capitalization' ? 'e.g. Sentence case'
+    : currentKind === 'repeater' ? 'e.g. Period, Bold, Decimal…'
+    : 'Select a category first'
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
+      {/* Category */}
       <div className="flex flex-col gap-1.5">
         <label className="text-sm font-medium text-slate-700">
           Category <span className="text-red-500">*</span>
         </label>
         <select
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          onChange={(e) => handleCategoryChange(e.target.value)}
           required
           className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
         >
@@ -82,36 +143,36 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
         </select>
       </div>
 
+      {/* Type / label */}
       <Input
-        label="Rule"
-        placeholder="e.g. Always use the Oxford comma"
+        label={currentKind === 'capitalization' ? 'Capitalization type' : 'Type'}
+        placeholder={typePlaceholder}
         value={ruleText}
         onChange={(e) => setRuleText(e.target.value)}
         required
+        disabled={!category}
       />
 
-      <Input
-        label="Do this ✓"
-        placeholder="e.g. strategy, copy, and design"
-        value={example}
-        onChange={(e) => setExample(e.target.value)}
-      />
+      {/* Category-specific fields */}
+      {currentKind === 'capitalization' && (
+        <CapitalizationFormFields
+          description={description}
+          textComponents={textComponents}
+          uiComponents={uiComponents}
+          onDescriptionChange={setDescription}
+          onTextComponentsChange={setTextComponents}
+          onUiComponentsChange={setUiComponents}
+        />
+      )}
 
-      <Input
-        label="Don't do this ✗"
-        placeholder="e.g. strategy, copy and design"
-        value={dontExample}
-        onChange={(e) => setDontExample(e.target.value)}
-      />
+      {currentKind === 'repeater' && (
+        <RepeaterFormFields
+          rules={repeaterRules}
+          onChange={setRepeaterRules}
+        />
+      )}
 
-      <Textarea
-        label="Description/Notes (optional)"
-        placeholder="Explain when and why this rule applies…"
-        rows={3}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-      />
-
+      {/* Order index */}
       <Input
         label="Order index"
         type="number"

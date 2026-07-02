@@ -32,6 +32,25 @@ export type TonePillar = {
   updated_at: string
 }
 
+export type RuleEntry = {
+  ruleText: string
+  doExamples: string[]
+  dontExamples: string[]
+}
+
+export type CapitalizationData = {
+  kind: 'capitalization'
+  textComponents: string[]
+  uiComponents: string[]
+}
+
+export type RepeaterData = {
+  kind: 'repeater'
+  rules: RuleEntry[]
+}
+
+export type MechanicsRuleData = CapitalizationData | RepeaterData
+
 export type MechanicsRule = {
   id: string
   rule: string
@@ -40,6 +59,7 @@ export type MechanicsRule = {
   dont_example: string | null
   description: string | null
   order_index: number
+  data: MechanicsRuleData | null
   created_at: string
   updated_at: string
 }

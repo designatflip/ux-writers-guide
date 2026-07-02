@@ -24,7 +24,7 @@ export default function DashboardMechanicsPage() {
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
     return rules.filter((r) => {
-      const matchSearch = !q || [r.rule, r.example, r.dont_example, r.description].some(v => v?.toLowerCase().includes(q))
+      const matchSearch = !q || [r.rule, r.example, r.dont_example, r.description, r.data ? JSON.stringify(r.data) : null].some(v => v?.toLowerCase().includes(q))
       const matchCategory = !categoryFilter || r.category === categoryFilter
       return matchSearch && matchCategory
     })
