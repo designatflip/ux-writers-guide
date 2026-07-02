@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import CyclingWord from '@/components/CyclingWord'
+import HomeSearch from '@/components/HomeSearch'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,7 +13,7 @@ export default async function Home() {
       supabase.from('glossary_terms').select('id, term, term_bahasa, category').order('term'),
       supabase.from('guidelines').select('id, title, slug').order('order_index'),
       supabase.from('tone_pillars').select('id, title').order('order_index'),
-      supabase.from('mechanics_rules').select('id, rule, example').order('order_index'),
+      supabase.from('mechanics_rules').select('id, rule, category').order('order_index'),
     ])
 
   const termList = terms ?? []
@@ -36,12 +37,6 @@ export default async function Home() {
             </span>
             <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
           </Link>
-          <Link href="/glossary" className="flex flex-1 items-center gap-2.5 rounded-xl border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-400 transition-colors hover:border-stone-300 max-w-lg">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-            </svg>
-            Search terms, rules, guidelines...
-          </Link>
           <nav className="ml-auto flex items-center gap-6">
             <Link href="/glossary" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Glossary</Link>
             <Link href="/guidelines" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Guidelines</Link>
@@ -63,10 +58,11 @@ export default async function Home() {
           Write like{' '}
           <CyclingWord />
         </h1>
-        <p className="text-lg leading-relaxed" style={{ color: '#78716c', maxWidth: '38rem' }}>
+        <p className="mb-8 text-lg leading-relaxed" style={{ color: '#78716c', maxWidth: '38rem' }}>
           Everything you need to communicate clearly, on-brand, and consistently,
           so we always sound like Flip!
         </p>
+        <HomeSearch terms={termList} guidelines={guidelineList} rules={ruleList} />
       </section>
 
       {/* Section cards */}
