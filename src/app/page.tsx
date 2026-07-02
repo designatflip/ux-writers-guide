@@ -74,7 +74,7 @@ export default async function Home() {
         <div className="grid grid-cols-5 gap-4">
 
           {/* Glossary — amber, col-span-3 */}
-          <div className="col-span-3 overflow-hidden rounded-2xl shadow-sm">
+          <div className="col-span-3 flex flex-col overflow-hidden rounded-2xl shadow-sm">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -103,7 +103,7 @@ export default async function Home() {
                 {termList.length} {termList.length === 1 ? 'term' : 'terms'}
               </p>
             </div>
-            <div className="bg-white p-5">
+            <div className="flex-1 bg-white p-5">
               {termList.length === 0 ? (
                 <p className="text-sm text-stone-400">No terms yet — add the first one in the dashboard.</p>
               ) : (
@@ -124,7 +124,7 @@ export default async function Home() {
           </div>
 
           {/* Guidelines — red, col-span-2 */}
-          <div className="col-span-2 overflow-hidden rounded-2xl shadow-sm">
+          <div className="col-span-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -149,7 +149,7 @@ export default async function Home() {
                 {guidelineList.length} {guidelineList.length === 1 ? 'guideline' : 'guidelines'}
               </p>
             </div>
-            <div className="bg-white p-5">
+            <div className="flex-1 bg-white p-5">
               {guidelineList.length === 0 ? (
                 <p className="text-sm text-stone-400">No guidelines yet — add the first one in the dashboard.</p>
               ) : (
@@ -177,7 +177,7 @@ export default async function Home() {
           </div>
 
           {/* Mechanics — blue, col-span-2 */}
-          <div className="col-span-2 overflow-hidden rounded-2xl shadow-sm">
+          <div className="col-span-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -202,7 +202,7 @@ export default async function Home() {
                 {ruleList.length} {ruleList.length === 1 ? 'rule' : 'rules'}
               </p>
             </div>
-            <div className="bg-white p-5">
+            <div className="flex-1 bg-white p-5">
               {ruleList.length === 0 ? (
                 <p className="text-sm text-stone-400">No rules yet — add the first one in the dashboard.</p>
               ) : (
@@ -228,7 +228,7 @@ export default async function Home() {
           </div>
 
           {/* Tone — lime green, col-span-3 */}
-          <div className="col-span-3 overflow-hidden rounded-2xl shadow-sm">
+          <div className="col-span-3 flex flex-col overflow-hidden rounded-2xl shadow-sm">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -256,7 +256,7 @@ export default async function Home() {
                 {pillarList.length} {pillarList.length === 1 ? 'pillar' : 'pillars'}
               </p>
             </div>
-            <div className="bg-white p-5">
+            <div className="flex-1 bg-white p-5">
               {pillarList.length === 0 ? (
                 <p className="text-sm text-stone-400">No pillars yet — add the first one in the dashboard.</p>
               ) : (
