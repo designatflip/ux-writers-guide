@@ -11,7 +11,7 @@ export default function PublicHeader() {
           >
             ✦
           </span>
-          <span className="text-sm font-bold text-slate-900">UX Writers Guide</span>
+          <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
         </Link>
 
         <Link

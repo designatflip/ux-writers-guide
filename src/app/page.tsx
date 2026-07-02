@@ -34,7 +34,7 @@ export default async function Home() {
             <span className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white" style={{ backgroundColor: '#111827' }}>
               ✦
             </span>
-            <span className="text-sm font-bold text-slate-900">UX Writers Guide</span>
+            <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
           </Link>
           <Link href="/glossary" className="flex flex-1 items-center gap-2.5 rounded-xl border border-stone-200 bg-stone-50 px-4 py-2 text-sm text-stone-400 transition-colors hover:border-stone-300 max-w-lg">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,7 +56,7 @@ export default async function Home() {
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
         <div className="mb-6">
           <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase text-white" style={{ backgroundColor: '#111827', letterSpacing: '0.14em' }}>
-            ✦ UX Writers Guide
+            ✦ Flip Communication Hub
           </span>
         </div>
         <h1 className="mb-5 text-7xl font-black leading-none tracking-tight" style={{ color: '#111827' }}>

@@ -31,7 +31,7 @@ export default function DashboardSidebar() {
   return (
     <aside className="flex h-screen w-56 flex-col border-r border-slate-200 bg-white px-3 py-5">
       <Link href="/" className="mb-6 px-2 text-base font-semibold text-slate-900 hover:text-indigo-600 transition-colors">
-        UX Writers Guide
+        Flip Communication Hub
       </Link>
 
       <nav className="flex flex-1 flex-col gap-5">

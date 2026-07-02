@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const supabase = await createClient()
   const { data } = await supabase.from('guidelines').select('title').eq('slug', slug).single()
-  return { title: data?.title ? `${data.title} — UX Writers Guide` : 'Guideline' }
+  return { title: data?.title ? `${data.title} — Flip Communication Hub` : 'Guideline' }
 }
 
 export default async function GuidelineDetailPage({ params }: Props) {

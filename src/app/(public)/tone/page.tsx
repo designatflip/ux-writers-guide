@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 
 export const dynamic = 'force-dynamic'
-export const metadata = { title: 'Tone of Voice — UX Writers Guide' }
+export const metadata = { title: 'Tone of Voice — Flip Communication Hub' }
 
 export default async function TonePage() {
   const supabase = await createClient()
