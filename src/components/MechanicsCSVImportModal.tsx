@@ -91,6 +91,7 @@ export default function MechanicsCSVImportModal({ onClose, onImported }: Mechani
           dont_example: r.dont_example || null,
           description: r.description || null,
           order_index: r.order_index,
+          data: null,
         })
       )
     )
