@@ -8,19 +8,33 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import CapitalizationFormFields from '@/components/mechanics/CapitalizationFormFields'
 import RepeaterFormFields from '@/components/mechanics/RepeaterFormFields'
-import type { MechanicsRule, RuleEntry, CapitalizationData, RepeaterData } from '@/types'
+import type { MechanicsRule, RuleEntry, ExampleItem, CapitalizationData, RepeaterData } from '@/types'
 
 interface MechanicsRuleFormProps {
   rule?: MechanicsRule
 }
 
+function migrateExamples(raw: unknown[]): ExampleItem[] {
+  return raw.map((item) =>
+    typeof item === 'string'
+      ? { type: 'text' as const, content: item }
+      : (item as ExampleItem)
+  )
+}
+
 function blankRepeaterFromLegacy(rule?: MechanicsRule): RuleEntry[] {
   if (!rule) return [{ ruleText: '', doExamples: [], dontExamples: [] }]
-  if (rule.data?.kind === 'repeater') return rule.data.rules
+  if (rule.data?.kind === 'repeater') {
+    return rule.data.rules.map((r) => ({
+      ...r,
+      doExamples: migrateExamples(r.doExamples as unknown[]),
+      dontExamples: migrateExamples(r.dontExamples as unknown[]),
+    }))
+  }
   return [{
     ruleText: '',
-    doExamples: rule.example ? [rule.example] : [],
-    dontExamples: rule.dont_example ? [rule.dont_example] : [],
+    doExamples: rule.example ? [{ type: 'text', content: rule.example }] : [],
+    dontExamples: rule.dont_example ? [{ type: 'text', content: rule.dont_example }] : [],
   }]
 }
 
@@ -79,9 +93,11 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
         data = { kind: 'capitalization', textComponents, uiComponents }
       } else {
         data = { kind: 'repeater', rules: repeaterRules }
-        // Populate flat columns from first rule's first examples for list-view compat
-        example = repeaterRules[0]?.doExamples[0] ?? null
-        dontExample = repeaterRules[0]?.dontExamples[0] ?? null
+        // Populate flat columns from first text example for list-view compat
+        const firstDo = repeaterRules[0]?.doExamples.find(e => e.type === 'text')
+        const firstDont = repeaterRules[0]?.dontExamples.find(e => e.type === 'text')
+        example = firstDo?.type === 'text' ? firstDo.content : null
+        dontExample = firstDont?.type === 'text' ? firstDont.content : null
       }
 
       const payload = {

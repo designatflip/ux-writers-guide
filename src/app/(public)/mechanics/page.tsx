@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
-import type { MechanicsRule, CapitalizationData, RepeaterData } from '@/types'
+import type { MechanicsRule, ExampleItem, CapitalizationData, RepeaterData } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Mechanics — Flip Communication Hub' }
@@ -82,6 +82,17 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
   )
 }
 
+function renderExampleItem(item: ExampleItem | string, j: number) {
+  // Handle legacy string format stored before the ExampleItem migration
+  if (typeof item === 'string') {
+    return <p key={j} className="font-mono text-sm text-slate-700">{item}</p>
+  }
+  if (item.type === 'image') {
+    return <img key={j} src={item.url} alt="" className="max-h-48 rounded object-contain" />
+  }
+  return <p key={j} className="font-mono text-sm text-slate-700">{item.content}</p>
+}
+
 function RepeaterCard({ rule }: { rule: MechanicsRule }) {
   const data = rule.data as RepeaterData
   return (
@@ -101,21 +112,17 @@ function RepeaterCard({ rule }: { rule: MechanicsRule }) {
                 {entry.doExamples.length > 0 && (
                   <div className="rounded-lg border border-green-100 bg-green-50 px-3 py-2">
                     <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
-                    <ul className="space-y-0.5">
-                      {entry.doExamples.map((ex, j) => (
-                        <li key={j} className="font-mono text-sm text-slate-700">{ex}</li>
-                      ))}
-                    </ul>
+                    <div className="space-y-1">
+                      {(entry.doExamples as (ExampleItem | string)[]).map(renderExampleItem)}
+                    </div>
                   </div>
                 )}
                 {entry.dontExamples.length > 0 && (
                   <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2">
                     <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
-                    <ul className="space-y-0.5">
-                      {entry.dontExamples.map((ex, j) => (
-                        <li key={j} className="font-mono text-sm text-slate-700">{ex}</li>
-                      ))}
-                    </ul>
+                    <div className="space-y-1">
+                      {(entry.dontExamples as (ExampleItem | string)[]).map(renderExampleItem)}
+                    </div>
                   </div>
                 )}
               </div>

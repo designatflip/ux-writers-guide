@@ -32,10 +32,14 @@ export type TonePillar = {
   updated_at: string
 }
 
+export type ExampleItem =
+  | { type: 'text'; content: string }
+  | { type: 'image'; url: string }
+
 export type RuleEntry = {
   ruleText: string
-  doExamples: string[]
-  dontExamples: string[]
+  doExamples: ExampleItem[]
+  dontExamples: ExampleItem[]
 }
 
 export type CapitalizationData = {
