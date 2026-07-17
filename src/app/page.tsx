@@ -5,21 +5,39 @@ import HomeSearch from '@/components/HomeSearch'
 
 export const dynamic = 'force-dynamic'
 
+function ComingSoon() {
+  return (
+    <div className="flex h-full flex-col items-center justify-center gap-1.5 py-6 text-center">
+      <p className="text-sm font-medium text-stone-400">Coming soon</p>
+      <p className="text-xs text-stone-300">This section isn&apos;t published yet.</p>
+    </div>
+  )
+}
+
 export default async function Home() {
   const supabase = await createClient()
 
-  const [{ data: terms }, { data: guidelines }, { data: pillars }, { data: mechRules }] =
+  const [{ data: terms }, { data: guidelines }, { data: pillars }, { data: mechRules }, { data: siteSettings }] =
     await Promise.all([
       supabase.from('glossary_terms').select('id, term, term_bahasa, category').order('term'),
       supabase.from('guidelines').select('id, title, slug').order('order_index'),
       supabase.from('tone_pillars').select('id, title').order('order_index'),
       supabase.from('mechanics_rules').select('id, rule, category').order('order_index'),
+      supabase.from('site_settings').select('value').eq('key', 'section_visibility').single(),
     ])
 
   const termList = terms ?? []
   const guidelineList = guidelines ?? []
   const pillarList = pillars ?? []
   const ruleList = mechRules ?? []
+
+  const rawVis = (siteSettings as { value?: Record<string, boolean> } | null)?.value ?? {}
+  const vis = {
+    glossary:   rawVis.glossary   !== false,
+    guidelines: rawVis.guidelines !== false,
+    mechanics:  rawVis.mechanics  !== false,
+    tone:       rawVis.tone       !== false,
+  }
 
   const visibleTerms = termList.slice(0, 6)
   const visibleGuidelines = guidelineList.slice(0, 4)
@@ -95,7 +113,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex-1 bg-white p-5">
-              {termList.length === 0 ? (
+              {!vis.glossary ? <ComingSoon /> : termList.length === 0 ? (
                 <p className="text-sm text-stone-400">No terms yet — add the first one in the dashboard.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
@@ -141,7 +159,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex-1 bg-white p-5">
-              {guidelineList.length === 0 ? (
+              {!vis.guidelines ? <ComingSoon /> : guidelineList.length === 0 ? (
                 <p className="text-sm text-stone-400">No guidelines yet — add the first one in the dashboard.</p>
               ) : (
                 <ol className="flex flex-col gap-3">
@@ -194,7 +212,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex-1 bg-white p-5">
-              {ruleList.length === 0 ? (
+              {!vis.mechanics ? <ComingSoon /> : ruleList.length === 0 ? (
                 <p className="text-sm text-stone-400">No rules yet — add the first one in the dashboard.</p>
               ) : (
                 <ol className="flex flex-col gap-3">
@@ -248,7 +266,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="flex-1 bg-white p-5">
-              {pillarList.length === 0 ? (
+              {!vis.tone ? <ComingSoon /> : pillarList.length === 0 ? (
                 <p className="text-sm text-stone-400">No pillars yet — add the first one in the dashboard.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
