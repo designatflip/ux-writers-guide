@@ -163,9 +163,12 @@ export default function RepeaterFormFields({ rules, onChange }: RepeaterFormFiel
       {rules.map((rule, i) => (
         <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Rule {i + 1}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-indigo-100 text-[11px] font-bold text-indigo-600">
+                {i + 1}
+              </span>
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rule</span>
+            </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"

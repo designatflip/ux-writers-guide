@@ -105,7 +105,12 @@ function RepeaterCard({ rule }: { rule: MechanicsRule }) {
         {data.rules.map((entry, i) => (
           <div key={i} className={i > 0 ? 'border-t border-slate-200 pt-4' : ''}>
             {entry.ruleText && (
-              <p className="mb-2 text-sm font-medium text-slate-700">{entry.ruleText}</p>
+              <div className="mb-2 flex items-baseline gap-2">
+                <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#5786CC' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <p className="text-sm font-medium text-slate-700">{entry.ruleText}</p>
+              </div>
             )}
             {(entry.doExamples.length > 0 || entry.dontExamples.length > 0) && (
               <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
