@@ -3,6 +3,7 @@ import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import { createClient } from '@/lib/supabase/server'
 import { formatDate } from '@/lib/utils'
+import { getSectionVisibility } from '@/lib/site-settings'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -17,7 +18,22 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function GuidelineDetailPage({ params }: Props) {
   const { slug } = await params
-  const supabase = await createClient()
+  const [vis, supabase] = await Promise.all([getSectionVisibility(), createClient()])
+
+  if (!vis.guidelines) {
+    return (
+      <div className="max-w-2xl">
+        <Link href="/guidelines" className="mb-6 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800">
+          ← Back to Guidelines
+        </Link>
+        <div className="mt-16 rounded-xl border border-dashed border-slate-200 py-24 text-center">
+          <p className="text-base font-semibold text-slate-300">Coming soon</p>
+          <p className="mt-1 text-sm text-slate-400">This section isn&apos;t published yet.</p>
+        </div>
+      </div>
+    )
+  }
+
   const { data: guideline } = await supabase
     .from('guidelines')
     .select('*')

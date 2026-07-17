@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
+import { getSectionVisibility } from '@/lib/site-settings'
 import type { MechanicsRule, ExampleItem, CapitalizationData, RepeaterData } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -148,6 +149,23 @@ function MechanicsRuleCard({ rule }: { rule: MechanicsRule }) {
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function MechanicsPage() {
+  const vis = await getSectionVisibility()
+
+  if (!vis.mechanics) {
+    return (
+      <div>
+        <div className="mb-8">
+          <h1 className="mb-1 text-3xl font-bold text-slate-900">Mechanics</h1>
+          <p className="text-slate-500">The technical rules that keep our writing polished across every channel.</p>
+        </div>
+        <div className="rounded-xl border border-dashed border-slate-200 py-24 text-center">
+          <p className="text-base font-semibold text-slate-300">Coming soon</p>
+          <p className="mt-1 text-sm text-slate-400">This section isn&apos;t published yet.</p>
+        </div>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
   const { data } = await supabase
     .from('mechanics_rules')

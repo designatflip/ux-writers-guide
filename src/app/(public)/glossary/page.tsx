@@ -4,6 +4,7 @@ import GlossaryCard from '@/components/glossary/GlossaryCard'
 import GlossarySearch from '@/components/glossary/GlossarySearch'
 import Badge from '@/components/ui/Badge'
 import type { GlossaryTerm } from '@/types'
+import { getSectionVisibility } from '@/lib/site-settings'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,6 +13,23 @@ interface Props {
 }
 
 export default async function GlossaryPage({ searchParams }: Props) {
+  const vis = await getSectionVisibility()
+
+  if (!vis.glossary) {
+    return (
+      <div>
+        <div className="mb-8">
+          <h1 className="mb-1 text-3xl font-bold text-slate-900">Glossary</h1>
+          <p className="text-slate-500">Shared vocabulary for the writing team.</p>
+        </div>
+        <div className="rounded-xl border border-dashed border-slate-200 py-24 text-center">
+          <p className="text-base font-semibold text-slate-300">Coming soon</p>
+          <p className="mt-1 text-sm text-slate-400">This section isn&apos;t published yet.</p>
+        </div>
+      </div>
+    )
+  }
+
   const { q, category, sort, view } = await searchParams
   const supabase = await createClient()
   const ascending = sort !== 'desc'
