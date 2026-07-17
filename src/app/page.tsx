@@ -49,11 +49,6 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
-        <div className="mb-6">
-          <span className="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase text-white" style={{ backgroundColor: '#111827', letterSpacing: '0.14em' }}>
-            ✦ Flip Communication Hub
-          </span>
-        </div>
         <h1 className="mb-5 text-7xl font-black leading-none tracking-tight" style={{ color: '#111827' }}>
           Write like{' '}
           <CyclingWord />
