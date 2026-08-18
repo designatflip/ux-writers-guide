@@ -23,8 +23,18 @@ export type Guideline = {
   updated_at: string
 }
 
+export type Product = {
+  id: string
+  name: string
+  slug: string
+  order_index: number
+  created_at: string
+  updated_at: string
+}
+
 export type TonePillar = {
   id: string
+  product_id: string
   title: string
   description: string | null
   do_example: string | null
@@ -36,6 +46,7 @@ export type TonePillar = {
 
 export type BrandConstant = {
   id: string
+  product_id: string
   constant: string
   heading: string
   description: string | null

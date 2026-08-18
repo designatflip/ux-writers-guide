@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { brandConstantStore } from '@/lib/store'
+import { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { brandConstantStore, productStore } from '@/lib/store'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
-import type { BrandConstant } from '@/types'
+import type { BrandConstant, Product } from '@/types'
 
 interface BrandConstantFormProps {
   constant?: BrandConstant
@@ -14,8 +15,11 @@ interface BrandConstantFormProps {
 
 export default function BrandConstantForm({ constant }: BrandConstantFormProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const isEditing = !!constant
 
+  const [products, setProducts] = useState<Product[]>([])
+  const [productId, setProductId] = useState(constant?.product_id ?? '')
   const [constantValue, setConstantValue] = useState(constant?.constant ?? '')
   const [heading, setHeading] = useState(constant?.heading ?? '')
   const [description, setDescription] = useState(constant?.description ?? '')
@@ -23,12 +27,24 @@ export default function BrandConstantForm({ constant }: BrandConstantFormProps) 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    productStore.list().then((list) => {
+      setProducts(list)
+      if (!isEditing) {
+        const fromQuery = searchParams.get('product')
+        if (fromQuery && list.some((p) => p.id === fromQuery)) setProductId(fromQuery)
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError('')
     try {
       const payload = {
+        product_id: productId,
         constant: constantValue,
         heading,
         description: description || null,
@@ -58,8 +74,34 @@ export default function BrandConstantForm({ constant }: BrandConstantFormProps) 
     }
   }
 
+  if (products.length === 0) {
+    return (
+      <div className="max-w-xl rounded-xl border border-dashed border-slate-200 py-12 text-center">
+        <p className="mb-4 text-slate-500">No products yet — create one first.</p>
+        <Link href="/entries/products/new"><Button>Create product</Button></Link>
+      </div>
+    )
+  }
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-slate-700">
+          Product <span className="text-red-500">*</span>
+        </label>
+        <select
+          value={productId}
+          onChange={(e) => setProductId(e.target.value)}
+          required
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+        >
+          <option value="">Select a product…</option>
+          {products.map(p => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
+      </div>
+
       <Input
         label="Brand constant"
         placeholder="e.g. Fair"

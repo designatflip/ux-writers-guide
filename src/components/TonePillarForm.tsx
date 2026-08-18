@@ -1,12 +1,13 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { tonePillarStore } from '@/lib/store'
+import { useEffect, useRef, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
+import { tonePillarStore, productStore } from '@/lib/store'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
-import type { TonePillar } from '@/types'
+import type { TonePillar, Product } from '@/types'
 
 interface TonePillarFormProps {
   pillar?: TonePillar
@@ -14,9 +15,12 @@ interface TonePillarFormProps {
 
 export default function TonePillarForm({ pillar }: TonePillarFormProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const isEditing = !!pillar
   const fileRef = useRef<HTMLInputElement>(null)
 
+  const [products, setProducts] = useState<Product[]>([])
+  const [productId, setProductId] = useState(pillar?.product_id ?? '')
   const [title, setTitle] = useState(pillar?.title ?? '')
   const [description, setDescription] = useState(pillar?.description ?? '')
   const [doExample, setDoExample] = useState(pillar?.do_example ?? '')
@@ -25,6 +29,17 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
   const [loading, setLoading] = useState(false)
   const [converting, setConverting] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    productStore.list().then((list) => {
+      setProducts(list)
+      if (!isEditing) {
+        const fromQuery = searchParams.get('product')
+        if (fromQuery && list.some((p) => p.id === fromQuery)) setProductId(fromQuery)
+      }
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function handleDocUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -52,6 +67,7 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
     setError('')
     try {
       const payload = {
+        product_id: productId,
         title,
         description: description || null,
         do_example: doExample || null,
@@ -82,8 +98,34 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
     }
   }
 
+  if (products.length === 0) {
+    return (
+      <div className="max-w-xl rounded-xl border border-dashed border-slate-200 py-12 text-center">
+        <p className="mb-4 text-slate-500">No products yet — create one first.</p>
+        <Link href="/entries/products/new"><Button>Create product</Button></Link>
+      </div>
+    )
+  }
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-slate-700">
+          Product <span className="text-red-500">*</span>
+        </label>
+        <select
+          value={productId}
+          onChange={(e) => setProductId(e.target.value)}
+          required
+          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+        >
+          <option value="">Select a product…</option>
+          {products.map(p => (
+            <option key={p.id} value={p.id}>{p.name}</option>
+          ))}
+        </select>
+      </div>
+
       <Input
         label="Pillar title"
         placeholder="e.g. Clear, not clever"

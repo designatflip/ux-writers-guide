@@ -1,5 +1,45 @@
 import { createClient } from '@/lib/supabase/client'
-import type { GlossaryTerm, Guideline, TonePillar, BrandConstant, MechanicsRule } from '@/types'
+import type { GlossaryTerm, Guideline, TonePillar, BrandConstant, Product, MechanicsRule } from '@/types'
+
+export const productStore = {
+  async list(): Promise<Product[]> {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('products')
+      .select('*')
+      .order('order_index', { ascending: true })
+    return data ?? []
+  },
+
+  async create(data: Omit<Product, 'id' | 'created_at' | 'updated_at'>): Promise<Product> {
+    const supabase = createClient()
+    const { data: created, error } = await supabase
+      .from('products')
+      .insert(data)
+      .select()
+      .single()
+    if (error) throw error
+    return created
+  },
+
+  async update(id: string, data: Partial<Product>): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('products')
+      .update({ ...data, updated_at: new Date().toISOString() })
+      .eq('id', id)
+    if (error) throw error
+  },
+
+  async delete(id: string): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('products')
+      .delete()
+      .eq('id', id)
+    if (error) throw error
+  },
+}
 
 export const termStore = {
   async list(): Promise<GlossaryTerm[]> {
@@ -119,6 +159,15 @@ export const tonePillarStore = {
       .eq('id', id)
     if (error) throw error
   },
+
+  async countByProduct(productId: string): Promise<number> {
+    const supabase = createClient()
+    const { count } = await supabase
+      .from('tone_pillars')
+      .select('id', { count: 'exact', head: true })
+      .eq('product_id', productId)
+    return count ?? 0
+  },
 }
 
 export const brandConstantStore = {
@@ -158,6 +207,15 @@ export const brandConstantStore = {
       .delete()
       .eq('id', id)
     if (error) throw error
+  },
+
+  async countByProduct(productId: string): Promise<number> {
+    const supabase = createClient()
+    const { count } = await supabase
+      .from('brand_constants')
+      .select('id', { count: 'exact', head: true })
+      .eq('product_id', productId)
+    return count ?? 0
   },
 }
 
