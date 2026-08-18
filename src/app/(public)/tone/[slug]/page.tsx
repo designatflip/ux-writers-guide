@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { getSectionVisibility } from '@/lib/site-settings'
+import Badge from '@/components/ui/Badge'
 import type { BrandConstant, TonePillar } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -129,7 +130,16 @@ export default async function ProductTonePage({ params }: Props) {
       </Link>
       <div className="mb-8">
         <h1 className="mb-1 text-3xl font-bold text-slate-900">{product.name}</h1>
-        <p className="text-slate-500">Our personality on the page — how we sound in everything we write.</p>
+        <p className="text-slate-500">
+          {product.description || 'Our personality on the page — how we sound in everything we write.'}
+        </p>
+        {product.features && product.features.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {product.features.map((f: string) => (
+              <Badge key={f} color="indigo">{f}</Badge>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="mb-10">

@@ -27,6 +27,8 @@ export type Product = {
   id: string
   name: string
   slug: string
+  description: string | null
+  features: string[] | null
   order_index: number
   created_at: string
   updated_at: string

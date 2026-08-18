@@ -6,6 +6,7 @@ import { productStore, brandConstantStore, tonePillarStore } from '@/lib/store'
 import { slugify } from '@/lib/utils'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
+import Textarea from '@/components/ui/Textarea'
 import type { Product } from '@/types'
 
 interface ProductFormProps {
@@ -18,6 +19,8 @@ export default function ProductForm({ product }: ProductFormProps) {
 
   const [name, setName] = useState(product?.name ?? '')
   const [slug, setSlug] = useState(product?.slug ?? '')
+  const [description, setDescription] = useState(product?.description ?? '')
+  const [features, setFeatures] = useState(product?.features?.join(', ') ?? '')
   const [orderIndex, setOrderIndex] = useState(String(product?.order_index ?? 0))
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -35,6 +38,8 @@ export default function ProductForm({ product }: ProductFormProps) {
       const payload = {
         name,
         slug,
+        description: description || null,
+        features: features ? features.split(',').map((f) => f.trim()).filter(Boolean) : null,
         order_index: parseInt(orderIndex) || 0,
       }
       if (isEditing) {
@@ -85,6 +90,21 @@ export default function ProductForm({ product }: ProductFormProps) {
         value={slug}
         onChange={(e) => setSlug(e.target.value)}
         required
+      />
+
+      <Textarea
+        label="Description (optional)"
+        placeholder="e.g. Products that have been the core of Flip's business since Flip's establishment"
+        rows={3}
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+      />
+
+      <Input
+        label="Features (comma-separated)"
+        placeholder="e.g. Bank Transfer, Top Up E-Wallet, Pulsa & Tagihan, Account & Subscription"
+        value={features}
+        onChange={(e) => setFeatures(e.target.value)}
       />
 
       <Input
