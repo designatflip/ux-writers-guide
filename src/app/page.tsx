@@ -50,9 +50,6 @@ export default async function Home() {
       <header className="sticky top-0 z-10 border-b border-stone-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white" style={{ backgroundColor: '#111827' }}>
-              ✦
-            </span>
             <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
           </Link>
           <nav className="ml-auto flex items-center gap-6">
