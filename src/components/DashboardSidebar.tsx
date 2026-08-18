@@ -9,6 +9,7 @@ const sections = [
     items: [
       { href: '/entries', label: 'Glossary', exact: true },
       { href: '/entries/guidelines', label: 'Guidelines' },
+      { href: '/entries/brand-constants', label: 'Brand Constants' },
       { href: '/entries/tone', label: 'Tone of Voice' },
       { href: '/entries/mechanics', label: 'Mechanics' },
     ],

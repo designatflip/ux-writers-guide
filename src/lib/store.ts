@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import type { GlossaryTerm, Guideline, TonePillar, MechanicsRule } from '@/types'
+import type { GlossaryTerm, Guideline, TonePillar, BrandConstant, MechanicsRule } from '@/types'
 
 export const termStore = {
   async list(): Promise<GlossaryTerm[]> {
@@ -115,6 +115,46 @@ export const tonePillarStore = {
     const supabase = createClient()
     const { error } = await supabase
       .from('tone_pillars')
+      .delete()
+      .eq('id', id)
+    if (error) throw error
+  },
+}
+
+export const brandConstantStore = {
+  async list(): Promise<BrandConstant[]> {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('brand_constants')
+      .select('*')
+      .order('order_index', { ascending: true })
+    return data ?? []
+  },
+
+  async create(data: Omit<BrandConstant, 'id' | 'created_at' | 'updated_at'>): Promise<BrandConstant> {
+    const supabase = createClient()
+    const { data: created, error } = await supabase
+      .from('brand_constants')
+      .insert(data)
+      .select()
+      .single()
+    if (error) throw error
+    return created
+  },
+
+  async update(id: string, data: Partial<BrandConstant>): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('brand_constants')
+      .update({ ...data, updated_at: new Date().toISOString() })
+      .eq('id', id)
+    if (error) throw error
+  },
+
+  async delete(id: string): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('brand_constants')
       .delete()
       .eq('id', id)
     if (error) throw error

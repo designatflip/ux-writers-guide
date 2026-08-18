@@ -19,6 +19,8 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
 
   const [title, setTitle] = useState(pillar?.title ?? '')
   const [description, setDescription] = useState(pillar?.description ?? '')
+  const [doExample, setDoExample] = useState(pillar?.do_example ?? '')
+  const [dontExample, setDontExample] = useState(pillar?.dont_example ?? '')
   const [orderIndex, setOrderIndex] = useState(String(pillar?.order_index ?? 0))
   const [loading, setLoading] = useState(false)
   const [converting, setConverting] = useState(false)
@@ -52,6 +54,8 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
       const payload = {
         title,
         description: description || null,
+        do_example: doExample || null,
+        dont_example: dontExample || null,
         order_index: parseInt(orderIndex) || 0,
       }
       if (isEditing) {
@@ -129,6 +133,22 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
+
+      <Textarea
+        label="Do's example (optional)"
+        placeholder={'e.g. "Ada biaya Rp6.500 untuk transfer ini. Mau lanjut?"'}
+        rows={2}
+        value={doExample}
+        onChange={(e) => setDoExample(e.target.value)}
+      />
+
+      <Textarea
+        label="Don'ts example (optional)"
+        placeholder={'e.g. "Mungkin dikenakan biaya tambahan."'}
+        rows={2}
+        value={dontExample}
+        onChange={(e) => setDontExample(e.target.value)}
+      />
 
       <Input
         label="Order index"
