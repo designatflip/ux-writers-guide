@@ -5,6 +5,7 @@ export default function PublicHeader() {
     <header className="sticky top-0 z-10 border-b border-stone-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
+          <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8" />
           <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
         </Link>
 
