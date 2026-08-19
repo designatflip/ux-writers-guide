@@ -8,7 +8,7 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-neutral-900">Sign in</h1>
           <p className="mt-1 text-sm text-neutral-600">
-            Enter your email — we&apos;ll send a magic link.
+            Enter your email and password to continue.
           </p>
         </div>
         <div className="rounded-xl border border-neutral-200 bg-white p-6 shadow-sm">

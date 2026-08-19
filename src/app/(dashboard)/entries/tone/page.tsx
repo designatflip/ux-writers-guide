@@ -93,8 +93,8 @@ export default function DashboardTonePage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-neutral-200 bg-neutral-50 text-left">
-                    <th className="px-4 py-3 font-medium text-neutral-600">Pillar</th>
                     <th className="px-4 py-3 font-medium text-neutral-600">Product</th>
+                    <th className="px-4 py-3 font-medium text-neutral-600">Pillar</th>
                     <th className="px-4 py-3 font-medium text-neutral-600">Description</th>
                     <th className="px-4 py-3 font-medium text-neutral-600">Do&apos;s</th>
                     <th className="px-4 py-3 font-medium text-neutral-600">Don&apos;ts</th>
@@ -106,11 +106,11 @@ export default function DashboardTonePage() {
                 <tbody>
                   {filtered.map((p) => (
                     <tr key={p.id} className="border-b border-neutral-50 last:border-0 hover:bg-neutral-50">
-                      <td className="px-4 py-3 font-medium text-neutral-900">{p.title}</td>
-                      <td className="px-4 py-3 text-neutral-600">{productName(p.product_id)}</td>
-                      <td className="max-w-xs truncate px-4 py-3 text-neutral-600">{p.description ?? '—'}</td>
-                      <td className="max-w-xs truncate px-4 py-3 text-neutral-600">{p.do_example ?? '—'}</td>
-                      <td className="max-w-xs truncate px-4 py-3 text-neutral-600">{p.dont_example ?? '—'}</td>
+                      <td className="max-w-32 truncate px-4 py-3 text-neutral-600">{productName(p.product_id)}</td>
+                      <td className="max-w-40 truncate px-4 py-3 font-medium text-neutral-900">{p.title}</td>
+                      <td className="max-w-56 truncate px-4 py-3 text-neutral-600">{p.description ?? '—'}</td>
+                      <td className="max-w-56 truncate px-4 py-3 text-neutral-600">{p.do_example ?? '—'}</td>
+                      <td className="max-w-56 truncate px-4 py-3 text-neutral-600">{p.dont_example ?? '—'}</td>
                       <td className="px-4 py-3 text-neutral-600">{p.order_index}</td>
                       <td className="px-4 py-3 text-neutral-600">{formatDate(p.updated_at)}</td>
                       <td className="px-4 py-3">

@@ -7,8 +7,8 @@ import Input from '@/components/ui/Input'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
@@ -17,32 +17,15 @@ export default function LoginForm() {
     setError('')
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-        shouldCreateUser: false,
-      },
-    })
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-    setLoading(false)
     if (error) {
+      setLoading(false)
       setError('Access denied. Please contact a writer friend to help you out')
-    } else {
-      setSent(true)
+      return
     }
-  }
 
-  if (sent) {
-    return (
-      <div className="text-center">
-        <div className="mb-3 text-3xl">✉️</div>
-        <p className="font-medium text-neutral-900">Check your email</p>
-        <p className="mt-1 text-sm text-neutral-600">
-          We sent a magic link to <strong>{email}</strong>.
-        </p>
-      </div>
-    )
+    window.location.href = '/entries'
   }
 
   return (
@@ -54,10 +37,18 @@ export default function LoginForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
+      />
+      <Input
+        label="Password"
+        type="password"
+        placeholder="••••••••"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
         error={error}
       />
       <Button type="submit" loading={loading} className="w-full">
-        Send magic link
+        Sign in
       </Button>
     </form>
   )

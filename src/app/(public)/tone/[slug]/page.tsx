@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props) {
 
 const HEADER_BG = '#AAE1D9'
 
-function BrandConstantsTable({ constants }: { constants: BrandConstant[] }) {
+function BrandConstantsTable({ constants, productName }: { constants: BrandConstant[]; productName: string }) {
   if (constants.length === 0) {
     return (
       <div className="rounded-xl border border-dashed border-neutral-200 py-12 text-center">
@@ -35,7 +35,7 @@ function BrandConstantsTable({ constants }: { constants: BrandConstant[] }) {
         <thead>
           <tr style={{ backgroundColor: HEADER_BG }}>
             <th className="px-4 py-3 text-left font-semibold text-neutral-900">Brand Constants</th>
-            <th className="px-4 py-3 text-left font-semibold text-neutral-900">Manifestation in Flip Core</th>
+            <th className="px-4 py-3 text-left font-semibold text-neutral-900">Manifestation in {productName}</th>
           </tr>
         </thead>
         <tbody>
@@ -144,7 +144,7 @@ export default async function ProductTonePage({ params }: Props) {
 
       <div className="mb-10">
         <h2 className="mb-3 text-lg font-semibold text-neutral-900">Brand Constants</h2>
-        <BrandConstantsTable constants={constants} />
+        <BrandConstantsTable constants={constants} productName={product.name} />
       </div>
 
       <div>
