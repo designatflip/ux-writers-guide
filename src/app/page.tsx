@@ -65,7 +65,7 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
-        <h1 className="mb-5 text-5xl font-black leading-none tracking-tight" style={{ color: '#222223' }}>
+        <h1 className="mb-5 text-7xl font-semibold leading-none tracking-tight" style={{ color: '#222223' }}>
           Write like{' '}
           <CyclingWord />
         </h1>
@@ -97,7 +97,7 @@ export default async function Home() {
                 }}
               />
               <div className="flex items-start justify-between">
-                <h2 className="text-4xl font-black leading-tight text-white">
+                <h2 className="text-2xl font-semibold leading-tight text-white">
                   Word list<br />
                   <span className="font-light">& glossary</span>
                 </h2>
@@ -143,7 +143,7 @@ export default async function Home() {
                 <path d="M0 15 Q15 0 30 15 Q45 30 60 15 Q75 0 90 15 Q105 30 120 15" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
               <div className="flex items-start justify-between">
-                <h2 className="text-4xl font-black leading-tight text-white">
+                <h2 className="text-2xl font-semibold leading-tight text-white">
                   Writing<br />
                   <span className="font-light">guidelines</span>
                 </h2>
@@ -196,7 +196,7 @@ export default async function Home() {
                 <path d="M0 15 Q15 0 30 15 Q45 30 60 15 Q75 0 90 15 Q105 30 120 15" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
               <div className="flex items-start justify-between">
-                <h2 className="text-4xl font-black leading-tight text-white">
+                <h2 className="text-2xl font-semibold leading-tight text-white">
                   Punctuation<br />
                   <span className="font-light">& mechanics</span>
                 </h2>
@@ -250,7 +250,7 @@ export default async function Home() {
                 <polygon points="115,2 126,22 115,42 104,22" fill="none" stroke="white" strokeWidth="1.8"/>
               </svg>
               <div className="flex items-start justify-between">
-                <h2 className="text-4xl font-black leading-tight text-white">
+                <h2 className="text-2xl font-semibold leading-tight text-white">
                   Tone of voice<br />
                   <span className="font-light">pillars</span>
                 </h2>
