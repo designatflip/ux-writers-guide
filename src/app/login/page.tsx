@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import LoginForm from './LoginForm'
 
 export default function LoginPage() {
@@ -7,11 +8,16 @@ export default function LoginPage() {
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-bold text-slate-900">Sign in</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Enter your email — we'll send a magic link.
+            Enter your email — we&apos;ll send a magic link.
           </p>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
           <LoginForm />
+        </div>
+        <div className="mt-6 text-center">
+          <Link href="/" className="text-sm text-slate-500 hover:text-slate-800">
+            ← Back to homepage
+          </Link>
         </div>
       </div>
     </main>

@@ -27,7 +27,7 @@ export default function LoginForm() {
 
     setLoading(false)
     if (error) {
-      setError(error.message)
+      setError('Access denied. Please contact a writer friend to help you out')
     } else {
       setSent(true)
     }
