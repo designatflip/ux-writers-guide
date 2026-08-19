@@ -269,9 +269,15 @@ export default async function Home() {
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {pillarList.map((p, i) => {
-                    const pillColors = ['#FFB207', '#EE255C', '#5786CC', '#00A68E', '#B01D88']
+                    const pillColors = [
+                      'bg-golden-100 text-golden-900 ring-1 ring-inset ring-golden/20',
+                      'bg-crimson-100 text-crimson-900 ring-1 ring-inset ring-crimson/20',
+                      'bg-sapphire-100 text-sapphire-900 ring-1 ring-inset ring-sapphire/20',
+                      'bg-jade-100 text-jade-900 ring-1 ring-inset ring-jade/20',
+                      'bg-mauve-100 text-mauve-900 ring-1 ring-inset ring-mauve/20',
+                    ]
                     return (
-                      <span key={p.id} className="rounded-full px-4 py-1.5 text-sm font-bold text-white" style={{ backgroundColor: pillColors[i % pillColors.length] }}>
+                      <span key={p.id} className={`rounded-full px-4 py-1.5 text-sm font-medium ${pillColors[i % pillColors.length]}`}>
                         {p.title}
                       </span>
                     )
