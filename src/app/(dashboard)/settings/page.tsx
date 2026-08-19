@@ -20,7 +20,7 @@ export default function SettingsPage() {
           </div>
           <div>
             <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-1">Authentication</p>
-            <p className="text-sm text-slate-500">Disabled — all routes are publicly accessible.</p>
+            <p className="text-sm text-slate-500">Magic link — restricted to authorized writers.</p>
           </div>
         </div>
       </div>

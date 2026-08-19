@@ -94,3 +94,15 @@ export type MechanicsRule = {
 }
 
 export type UserRole = 'editor' | 'viewer'
+
+export type ActivityAction = 'create' | 'update' | 'delete'
+
+export type ActivityLog = {
+  id: string
+  actor_email: string
+  action: ActivityAction
+  entity_type: string
+  entity_label: string
+  entity_id: string | null
+  created_at: string
+}

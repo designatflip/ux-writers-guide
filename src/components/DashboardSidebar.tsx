@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
 
 const sections = [
   {
@@ -19,15 +20,28 @@ const sections = [
     label: 'System',
     items: [
       { href: '/settings', label: 'Settings', exact: false },
+      { href: '/activity', label: 'Change Log', exact: false },
     ],
   },
 ]
 
-export default function DashboardSidebar() {
+interface DashboardSidebarProps {
+  userEmail?: string | null
+}
+
+export default function DashboardSidebar({ userEmail }: DashboardSidebarProps) {
   const pathname = usePathname()
+  const router = useRouter()
 
   function isActive(href: string, exact?: boolean) {
     return exact ? pathname === href : pathname.startsWith(href)
+  }
+
+  async function handleSignOut() {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push('/login')
+    router.refresh()
   }
 
   return (
@@ -63,6 +77,19 @@ export default function DashboardSidebar() {
           </div>
         ))}
       </nav>
+
+      {userEmail && (
+        <div className="mt-4 border-t border-slate-100 px-2 pt-4">
+          <p className="mb-2 truncate text-xs text-slate-500" title={userEmail}>{userEmail}</p>
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
+          >
+            Sign out
+          </button>
+        </div>
+      )}
     </aside>
   )
 }

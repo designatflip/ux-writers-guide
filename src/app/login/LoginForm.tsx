@@ -21,6 +21,7 @@ export default function LoginForm() {
       email,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/callback`,
+        shouldCreateUser: false,
       },
     })
 
