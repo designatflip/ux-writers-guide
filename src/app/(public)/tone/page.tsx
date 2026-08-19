@@ -38,6 +38,42 @@ export default async function TonePage() {
         <p className="text-neutral-600">Our personality on the page — how we sound in everything we write, per product.</p>
       </div>
 
+      <div className="mb-10">
+        <p className="mb-6 text-neutral-700">
+          Flip has always had a brand voice since we first appeared in 2016: Fair, Smart, and Friendly.
+        </p>
+
+        <div className="space-y-8">
+          <div>
+            <h2 className="mb-2 text-3xl font-bold text-flip-orange">Friendly</h2>
+            <p className="text-neutral-700">
+              Communicate like a good friend, not stranger. We need to{' '}
+              <strong className="font-bold text-neutral-900">understand each customer is different with their own challenges and passions.</strong>{' '}
+              We also give them feelings of <strong className="font-bold text-neutral-900">familiar, warm, and calm.</strong>
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-2 text-3xl font-bold text-flip-orange">Fair</h2>
+            <p className="text-neutral-700">
+              Fairness is Flip&apos;s inherent main vision. Before we communicate to the audience, we need to think: is it fair to our user?
+              Give them senses of <strong className="font-bold text-neutral-900">clarity, transparency, and getting immediate response.</strong>
+            </p>
+          </div>
+          <div>
+            <h2 className="mb-2 text-3xl font-bold text-flip-orange">Smart</h2>
+            <p className="text-neutral-700">
+              We all know that one friend who experience and compassionate at the same time, right? Flip communicate like this.
+              We want to educate people with new perspective without patronizing or confusing them.{' '}
+              <strong className="font-bold text-neutral-900">Give them a sense that Flip is their bridge from them to new knowledge.</strong>
+            </p>
+          </div>
+        </div>
+
+        <p className="mt-8 text-neutral-700">
+          However, today, Flip has a variety of products catering to very different users. We&apos;ve mapped our tone of voice for each product below.
+        </p>
+      </div>
+
       {!products || products.length === 0 ? (
         <div className="rounded-xl border border-dashed border-neutral-200 py-16 text-center">
           <p className="text-neutral-600">No products published yet.</p>
