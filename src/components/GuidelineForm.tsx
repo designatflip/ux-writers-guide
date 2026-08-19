@@ -209,12 +209,12 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
 
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-slate-700">Content</label>
+            <label className="text-sm font-medium text-neutral-900">Content</label>
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
               disabled={converting}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:border-neutral-200 hover:bg-neutral-50 disabled:opacity-50"
             >
               {converting ? (
                 <>
@@ -243,7 +243,7 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
           </div>
 
           {/* Formatting toolbar */}
-          <div className="flex flex-wrap items-center gap-px rounded-t-lg border border-b-0 border-slate-200 bg-slate-50 px-2 py-1.5">
+          <div className="flex flex-wrap items-center gap-px rounded-t-lg border border-b-0 border-neutral-200 bg-neutral-50 px-2 py-1.5">
             <ToolbarBtn onClick={() => applyFormat('h1')} title="Heading 1">H1</ToolbarBtn>
             <ToolbarBtn onClick={() => applyFormat('h2')} title="Heading 2">H2</ToolbarBtn>
             <ToolbarBtn onClick={() => applyFormat('h3')} title="Heading 3">H3</ToolbarBtn>
@@ -282,11 +282,11 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
             rows={14}
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="rounded-t-none border-t-0 focus:border-slate-200 focus:ring-0"
+            className="rounded-t-none border-t-0 focus:border-neutral-200 focus:ring-0"
           />
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-sm text-crimson">{error}</p>}
 
         <div className="flex items-center gap-3 pt-2">
           <Button type="submit" loading={loading}>
@@ -308,20 +308,20 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-6 pt-16">
           <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl">
             {/* Modal header */}
-            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+            <div className="flex items-center justify-between border-b border-neutral-50 px-6 py-4">
               <div className="flex items-center gap-2.5">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-green-100">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-jade-100">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00A68E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"/>
                   </svg>
                 </span>
-                <span className="text-sm font-semibold text-slate-700">
+                <span className="text-sm font-semibold text-neutral-900">
                   {isEditing ? 'Changes saved' : 'Guideline published'}
                 </span>
               </div>
               <button
                 onClick={() => router.push('/entries/guidelines')}
-                className="text-slate-400 hover:text-slate-600"
+                className="text-neutral-400 hover:text-neutral-600"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
@@ -329,8 +329,8 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
 
             {/* Rendered preview */}
             <div className="px-8 py-6">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-slate-400">Preview</p>
-              <h1 className="mb-6 text-2xl font-bold text-slate-900">{preview.title}</h1>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-neutral-400">Preview</p>
+              <h1 className="mb-6 text-2xl font-bold text-neutral-900">{preview.title}</h1>
               {preview.content ? (
                 <div className="prose prose-slate max-w-none">
                   <ReactMarkdown
@@ -343,15 +343,15 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
                   </ReactMarkdown>
                 </div>
               ) : (
-                <p className="text-slate-400">No content.</p>
+                <p className="text-neutral-400">No content.</p>
               )}
             </div>
 
             {/* Modal footer */}
-            <div className="flex items-center justify-between border-t border-slate-100 px-6 py-4">
+            <div className="flex items-center justify-between border-t border-neutral-50 px-6 py-4">
               <button
                 onClick={() => router.push('/entries/guidelines')}
-                className="text-sm text-slate-500 hover:text-slate-800"
+                className="text-sm text-neutral-600 hover:text-neutral-900"
               >
                 ← Back to guidelines
               </button>
@@ -359,7 +359,7 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
                 href={`/guidelines/${preview.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-flip-orange px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-flip-orange-700"
               >
                 View live page
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -378,7 +378,7 @@ function ToolbarBtn({ onClick, title, children }: { onClick: () => void; title: 
       type="button"
       onClick={onClick}
       title={title}
-      className="flex h-7 w-7 items-center justify-center rounded text-xs font-bold text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-800"
+      className="flex h-7 w-7 items-center justify-center rounded text-xs font-bold text-neutral-600 transition-colors hover:bg-neutral-200 hover:text-neutral-900"
     >
       {children}
     </button>
@@ -386,5 +386,5 @@ function ToolbarBtn({ onClick, title, children }: { onClick: () => void; title: 
 }
 
 function ToolbarDivider() {
-  return <div className="mx-1 h-4 w-px bg-slate-300" />
+  return <div className="mx-1 h-4 w-px bg-neutral-200" />
 }

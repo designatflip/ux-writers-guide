@@ -37,8 +37,8 @@ export default function LoginForm() {
     return (
       <div className="text-center">
         <div className="mb-3 text-3xl">✉️</div>
-        <p className="font-medium text-slate-900">Check your email</p>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="font-medium text-neutral-900">Check your email</p>
+        <p className="mt-1 text-sm text-neutral-600">
           We sent a magic link to <strong>{email}</strong>.
         </p>
       </div>

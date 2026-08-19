@@ -21,7 +21,7 @@ export default function EditGuidelinePage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">Edit Guideline</h1>
+      <h1 className="mb-6 text-2xl font-bold text-neutral-900">Edit Guideline</h1>
       <GuidelineForm guideline={guideline} />
     </div>
   )

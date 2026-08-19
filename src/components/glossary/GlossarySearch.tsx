@@ -44,7 +44,7 @@ export default function GlossarySearch({ categories }: GlossarySearchProps) {
       <select
         defaultValue={searchParams.get('category') ?? ''}
         onChange={(e) => updateParam('category', e.target.value)}
-        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+        className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-flip-orange focus:outline-none focus:ring-2 focus:ring-flip-orange/20"
       >
         <option value="">All categories</option>
         {categories.map((cat) => (
@@ -56,21 +56,21 @@ export default function GlossarySearch({ categories }: GlossarySearchProps) {
       <select
         value={currentSort}
         onChange={(e) => updateParam('sort', e.target.value)}
-        className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+        className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-flip-orange focus:outline-none focus:ring-2 focus:ring-flip-orange/20"
       >
         <option value="asc">A → Z</option>
         <option value="desc">Z → A</option>
       </select>
 
       {/* View toggle */}
-      <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-white p-1">
+      <div className="flex items-center gap-1 rounded-lg border border-neutral-200 bg-white p-1">
         <button
           onClick={() => updateParam('view', 'grid')}
           title="Grid view"
           className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
             currentView === 'grid'
-              ? 'bg-slate-100 text-slate-800'
-              : 'text-slate-400 hover:text-slate-600'
+              ? 'bg-neutral-50 text-neutral-900'
+              : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -85,8 +85,8 @@ export default function GlossarySearch({ categories }: GlossarySearchProps) {
           title="List view"
           className={`flex h-7 w-7 items-center justify-center rounded transition-colors ${
             currentView === 'list'
-              ? 'bg-slate-100 text-slate-800'
-              : 'text-slate-400 hover:text-slate-600'
+              ? 'bg-neutral-50 text-neutral-900'
+              : 'text-neutral-400 hover:text-neutral-600'
           }`}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">

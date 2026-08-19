@@ -100,8 +100,8 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
 
   if (products.length === 0) {
     return (
-      <div className="max-w-xl rounded-xl border border-dashed border-slate-200 py-12 text-center">
-        <p className="mb-4 text-slate-500">No products yet — create one first.</p>
+      <div className="max-w-xl rounded-xl border border-dashed border-neutral-200 py-12 text-center">
+        <p className="mb-4 text-neutral-600">No products yet — create one first.</p>
         <Link href="/entries/products/new"><Button>Create product</Button></Link>
       </div>
     )
@@ -110,14 +110,14 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
   return (
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-slate-700">
-          Product <span className="text-red-500">*</span>
+        <label className="text-sm font-medium text-neutral-900">
+          Product <span className="text-crimson">*</span>
         </label>
         <select
           value={productId}
           onChange={(e) => setProductId(e.target.value)}
           required
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+          className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-flip-orange-300 focus:outline-none focus:ring-2 focus:ring-flip-orange-100"
         >
           <option value="">Select a product…</option>
           {products.map(p => (
@@ -136,12 +136,12 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
 
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-slate-700">Description (optional)</label>
+          <label className="text-sm font-medium text-neutral-900">Description (optional)</label>
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
             disabled={converting}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:border-neutral-200 hover:bg-neutral-50 disabled:opacity-50"
           >
             {converting ? (
               <>
@@ -200,7 +200,7 @@ export default function TonePillarForm({ pillar }: TonePillarFormProps) {
         onChange={(e) => setOrderIndex(e.target.value)}
       />
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-crimson">{error}</p>}
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" loading={loading}>

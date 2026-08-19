@@ -106,29 +106,29 @@ export default function GuidelineCSVImportModal({ onClose, onImported }: Guideli
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-neutral-200 px-6 py-4">
           <div>
-            <h2 className="text-base font-semibold text-slate-900">Import Guidelines from CSV</h2>
-            <p className="mt-0.5 text-xs text-slate-500">
+            <h2 className="text-base font-semibold text-neutral-900">Import Guidelines from CSV</h2>
+            <p className="mt-0.5 text-xs text-neutral-600">
               Required: <code className="font-mono">title</code>
               {' '}· Optional: <code className="font-mono">slug</code>, <code className="font-mono">content</code>, <code className="font-mono">order_index</code>
             </p>
           </div>
-          <button onClick={onClose} className="text-xl leading-none text-slate-400 hover:text-slate-600">✕</button>
+          <button onClick={onClose} className="text-xl leading-none text-neutral-400 hover:text-neutral-600">✕</button>
         </div>
 
         {/* Body */}
         <div className="flex-1 space-y-4 overflow-auto px-6 py-5">
           {/* File picker */}
           <div
-            className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-200 py-8 transition-colors hover:border-indigo-300 hover:bg-indigo-50/30"
+            className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-neutral-200 py-8 transition-colors hover:border-flip-orange-300 hover:bg-flip-orange-100/30"
             onClick={() => inputRef.current?.click()}
           >
             <span className="text-2xl">📂</span>
-            <p className="text-sm font-medium text-slate-700">
+            <p className="text-sm font-medium text-neutral-900">
               {fileName || 'Click to choose a CSV file'}
             </p>
-            {fileName && <p className="text-xs text-slate-400">Click to choose a different file</p>}
+            {fileName && <p className="text-xs text-neutral-400">Click to choose a different file</p>}
             <input ref={inputRef} type="file" accept=".csv,text/csv" className="hidden" onChange={handleFile} />
           </div>
 
@@ -136,31 +136,31 @@ export default function GuidelineCSVImportModal({ onClose, onImported }: Guideli
           {rows.length > 0 && (
             <div>
               <div className="mb-2 flex items-center gap-2 text-sm">
-                <span className="font-medium text-slate-700">{rows.length} rows found</span>
+                <span className="font-medium text-neutral-900">{rows.length} rows found</span>
                 {validCount > 0 && <Badge color="green">{validCount} valid</Badge>}
                 {errorCount > 0 && <Badge color="red">{errorCount} errors</Badge>}
               </div>
-              <div className="overflow-auto rounded-lg border border-slate-200">
+              <div className="overflow-auto rounded-lg border border-neutral-200">
                 <table className="w-full text-xs">
                   <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50 text-left">
-                      <th className="px-3 py-2 font-medium text-slate-600">Title</th>
-                      <th className="px-3 py-2 font-medium text-slate-600">Slug</th>
-                      <th className="px-3 py-2 font-medium text-slate-600">Content</th>
-                      <th className="px-3 py-2 font-medium text-slate-600">Order</th>
+                    <tr className="border-b border-neutral-200 bg-neutral-50 text-left">
+                      <th className="px-3 py-2 font-medium text-neutral-600">Title</th>
+                      <th className="px-3 py-2 font-medium text-neutral-600">Slug</th>
+                      <th className="px-3 py-2 font-medium text-neutral-600">Content</th>
+                      <th className="px-3 py-2 font-medium text-neutral-600">Order</th>
                     </tr>
                   </thead>
                   <tbody>
                     {rows.map((row, i) => (
-                      <tr key={i} className={`border-b border-slate-100 last:border-0 ${row.error ? 'bg-red-50' : ''}`}>
-                        <td className="max-w-[160px] truncate px-3 py-2 font-medium text-slate-900">
+                      <tr key={i} className={`border-b border-neutral-50 last:border-0 ${row.error ? 'bg-crimson-100' : ''}`}>
+                        <td className="max-w-[160px] truncate px-3 py-2 font-medium text-neutral-900">
                           {row.error
-                            ? <span className="italic text-red-600">{row.error}</span>
+                            ? <span className="italic text-crimson">{row.error}</span>
                             : row.title}
                         </td>
-                        <td className="max-w-[140px] truncate px-3 py-2 font-mono text-slate-500">{row.slug}</td>
-                        <td className="max-w-[240px] truncate px-3 py-2 text-slate-500">{row.content || '—'}</td>
-                        <td className="px-3 py-2 text-slate-500">{row.order_index}</td>
+                        <td className="max-w-[140px] truncate px-3 py-2 font-mono text-neutral-600">{row.slug}</td>
+                        <td className="max-w-[240px] truncate px-3 py-2 text-neutral-600">{row.content || '—'}</td>
+                        <td className="px-3 py-2 text-neutral-600">{row.order_index}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -170,18 +170,18 @@ export default function GuidelineCSVImportModal({ onClose, onImported }: Guideli
           )}
 
           {imported && (
-            <p className="text-sm font-medium text-green-700">
+            <p className="text-sm font-medium text-jade-700">
               ✓ {validCount} {validCount === 1 ? 'guideline' : 'guidelines'} imported successfully.
             </p>
           )}
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4">
+        <div className="flex items-center justify-between border-t border-neutral-200 px-6 py-4">
           <a
             href="data:text/csv;charset=utf-8,title,slug,content,order_index%0AWriting%20for%20errors,writing-for-errors,%22Be%20specific%20and%20never%20blame%20the%20user%22,1"
             download="guidelines-template.csv"
-            className="text-xs text-indigo-600 hover:text-indigo-800"
+            className="text-xs text-flip-orange hover:text-flip-orange-900"
           >
             Download template
           </a>

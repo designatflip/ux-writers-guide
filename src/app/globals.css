@@ -16,21 +16,67 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
-  --muted: #f8fafc;
-  --muted-foreground: #64748b;
-  --border: #e2e8f0;
-  --accent: #4f46e5;
-  --accent-foreground: #ffffff;
+  --foreground: #222223;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
-  --color-accent: var(--accent);
+
+  /* Neutral */
+  --color-neutral-900: #222223; /* Main Text */
+  --color-neutral-600: #747474; /* Secondary Text */
+  --color-neutral-400: #AAABAD; /* Placeholder / Disabled Text */
+  --color-neutral-200: #E3E3E4; /* Border / Disabled BG */
+  --color-neutral-50: #F3F5F6;  /* Container 2nd BG */
+
+  /* Flip Orange (primary brand/action color) */
+  --color-flip-orange-900: #7E3221;
+  --color-flip-orange-700: #D35437;
+  --color-flip-orange: #FD6542;
+  --color-flip-orange-300: #FE9881;
+  --color-flip-orange-200: #FEC183;
+  --color-flip-orange-100: #FFF5F3;
+
+  /* Golden Yellow */
+  --color-golden-900: #543D07;
+  --color-golden-700: #A87A0D;
+  --color-golden: #FFB207;
+  --color-golden-300: #FDCF62;
+  --color-golden-200: #FEE7B1;
+  --color-golden-100: #FDF6DC;
+
+  /* Crimson Red (Don't / errors / danger) */
+  --color-crimson-900: #8A1A38;
+  --color-crimson-700: #C61F4D;
+  --color-crimson: #EE255C;
+  --color-crimson-300: #F46E92;
+  --color-crimson-200: #F9B6C9;
+  --color-crimson-100: #FDE9EF;
+
+  /* Jade Green (Do / success) */
+  --color-jade-900: #00372F;
+  --color-jade-700: #006F5F;
+  --color-jade: #00A68E;
+  --color-jade-300: #55C4B4;
+  --color-jade-200: #AAE1D9;
+  --color-jade-100: #E5F6F4;
+
+  /* Sapphire Blue */
+  --color-sapphire-900: #1D2044;
+  --color-sapphire-700: #3A5988;
+  --color-sapphire: #5786CC;
+  --color-sapphire-300: #8FAEDD;
+  --color-sapphire-200: #C7D7EE;
+  --color-sapphire-100: #DDE7F5;
+
+  /* Mauve Purple */
+  --color-mauve-900: #3B0A2D;
+  --color-mauve-700: #75135B;
+  --color-mauve: #B01D88;
+  --color-mauve-300: #CA6BB0;
+  --color-mauve-200: #E5B4D7;
+  --color-mauve-100: #EFD2E7;
 }
 
 body {

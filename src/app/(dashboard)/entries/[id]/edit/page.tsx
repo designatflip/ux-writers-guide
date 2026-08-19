@@ -21,7 +21,7 @@ export default function EditEntryPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">Edit Entry</h1>
+      <h1 className="mb-6 text-2xl font-bold text-neutral-900">Edit Entry</h1>
       <EntryForm entry={entry} />
     </div>
   )

@@ -143,14 +143,14 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
     <form onSubmit={handleSubmit} autoComplete="off" className="max-w-xl space-y-4">
       {/* Category */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-slate-700">
-          Category <span className="text-red-500">*</span>
+        <label className="text-sm font-medium text-neutral-900">
+          Category <span className="text-crimson">*</span>
         </label>
         <select
           value={category}
           onChange={(e) => handleCategoryChange(e.target.value)}
           required
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+          className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-flip-orange-300 focus:outline-none focus:ring-2 focus:ring-flip-orange-100"
         >
           <option value="">Select a category…</option>
           {MECHANICS_CATEGORIES.map(c => (
@@ -197,7 +197,7 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
         onChange={(e) => setOrderIndex(e.target.value)}
       />
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-crimson">{error}</p>}
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" loading={loading}>

@@ -111,18 +111,18 @@ export default function EntryForm({ entry }: EntryFormProps) {
         onChange={(e) => setTags(e.target.value)}
       />
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium text-slate-700">Status</label>
+        <label className="text-sm font-medium text-neutral-900">Status</label>
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value as 'draft' | 'published')}
-          className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+          className="rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-flip-orange focus:outline-none focus:ring-2 focus:ring-flip-orange/20"
         >
           <option value="draft">Draft</option>
           <option value="published">Published</option>
         </select>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-crimson">{error}</p>}
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" loading={loading}>

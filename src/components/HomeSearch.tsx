@@ -52,7 +52,7 @@ export default function HomeSearch({ terms, guidelines, rules }: HomeSearchProps
       {/* Input */}
       <div className="relative">
         <svg
-          className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-stone-400"
+          className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400"
           width="20" height="20" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
         >
@@ -64,13 +64,13 @@ export default function HomeSearch({ terms, guidelines, rules }: HomeSearchProps
           onChange={(e) => { setQuery(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
           placeholder="Search terms, rules, guidelines…"
-          className="w-full rounded-2xl border border-stone-200 bg-white py-4 pl-14 pr-5 text-base text-stone-900 shadow-sm placeholder-stone-400 transition-shadow focus:border-stone-300 focus:outline-none focus:ring-4 focus:ring-stone-900/5"
+          className="w-full rounded-2xl border border-neutral-200 bg-white py-4 pl-14 pr-5 text-base text-neutral-900 shadow-sm placeholder-neutral-400 transition-shadow focus:border-neutral-200 focus:outline-none focus:ring-4 focus:ring-neutral-900/5"
         />
         {query && (
           <button
             type="button"
             onClick={() => { setQuery(''); setOpen(false) }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full text-stone-400 hover:bg-stone-100 hover:text-stone-600"
+            className="absolute right-4 top-1/2 -translate-y-1/2 flex h-6 w-6 items-center justify-center rounded-full text-neutral-400 hover:bg-neutral-50 hover:text-neutral-600"
           >
             ×
           </button>
@@ -79,68 +79,68 @@ export default function HomeSearch({ terms, guidelines, rules }: HomeSearchProps
 
       {/* Dropdown */}
       {showDropdown && (
-        <div className="absolute top-full z-50 mt-2 w-full overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-xl">
+        <div className="absolute top-full z-50 mt-2 w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl">
           {!hasResults ? (
-            <p className="px-5 py-4 text-sm text-stone-400">No results for &ldquo;{query}&rdquo;</p>
+            <p className="px-5 py-4 text-sm text-neutral-400">No results for &ldquo;{query}&rdquo;</p>
           ) : (
             <>
               {matchedTerms.length > 0 && (
                 <div>
-                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-stone-400">Glossary</p>
+                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">Glossary</p>
                   {matchedTerms.map((t) => (
                     <Link
                       key={t.id}
                       href={`/glossary?q=${encodeURIComponent(t.term_bahasa || t.term)}`}
                       onClick={close}
-                      className="flex items-baseline gap-2.5 px-5 py-2.5 hover:bg-stone-50"
+                      className="flex items-baseline gap-2.5 px-5 py-2.5 hover:bg-neutral-50"
                     >
-                      <span className="text-sm font-medium text-stone-800">{t.term_bahasa || t.term}</span>
-                      {t.term_bahasa && <span className="text-xs text-stone-400">{t.term}</span>}
+                      <span className="text-sm font-medium text-neutral-900">{t.term_bahasa || t.term}</span>
+                      {t.term_bahasa && <span className="text-xs text-neutral-400">{t.term}</span>}
                     </Link>
                   ))}
                 </div>
               )}
 
               {matchedGuidelines.length > 0 && (
-                <div className={matchedTerms.length > 0 ? 'border-t border-stone-100' : ''}>
-                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-stone-400">Guidelines</p>
+                <div className={matchedTerms.length > 0 ? 'border-t border-neutral-50' : ''}>
+                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">Guidelines</p>
                   {matchedGuidelines.map((g) => (
                     <Link
                       key={g.id}
                       href={`/guidelines/${g.slug}`}
                       onClick={close}
-                      className="flex items-center px-5 py-2.5 hover:bg-stone-50"
+                      className="flex items-center px-5 py-2.5 hover:bg-neutral-50"
                     >
-                      <span className="text-sm font-medium text-stone-800">{g.title}</span>
+                      <span className="text-sm font-medium text-neutral-900">{g.title}</span>
                     </Link>
                   ))}
                 </div>
               )}
 
               {matchedRules.length > 0 && (
-                <div className={(matchedTerms.length > 0 || matchedGuidelines.length > 0) ? 'border-t border-stone-100' : ''}>
-                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-stone-400">Mechanics</p>
+                <div className={(matchedTerms.length > 0 || matchedGuidelines.length > 0) ? 'border-t border-neutral-50' : ''}>
+                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">Mechanics</p>
                   {matchedRules.map((r) => (
                     <Link
                       key={r.id}
                       href="/mechanics"
                       onClick={close}
-                      className="flex items-center gap-3 px-5 py-2.5 hover:bg-stone-50"
+                      className="flex items-center gap-3 px-5 py-2.5 hover:bg-neutral-50"
                     >
-                      <span className="text-sm font-medium text-stone-800">{r.rule}</span>
+                      <span className="text-sm font-medium text-neutral-900">{r.rule}</span>
                       {r.category && (
-                        <span className="rounded-full border border-stone-200 px-2 py-0.5 text-[11px] text-stone-400">{r.category}</span>
+                        <span className="rounded-full border border-neutral-200 px-2 py-0.5 text-[11px] text-neutral-400">{r.category}</span>
                       )}
                     </Link>
                   ))}
                 </div>
               )}
 
-              <div className="border-t border-stone-100 px-5 py-2.5">
+              <div className="border-t border-neutral-50 px-5 py-2.5">
                 <Link
                   href={`/glossary?q=${encodeURIComponent(query)}`}
                   onClick={close}
-                  className="text-xs font-medium text-indigo-600 hover:text-indigo-800"
+                  className="text-xs font-medium text-flip-orange hover:text-flip-orange-900"
                 >
                   See all glossary results for &ldquo;{query}&rdquo; →
                 </Link>

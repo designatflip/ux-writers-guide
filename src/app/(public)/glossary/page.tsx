@@ -19,12 +19,12 @@ export default async function GlossaryPage({ searchParams }: Props) {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="mb-1 text-3xl font-bold text-slate-900">Glossary</h1>
-          <p className="text-slate-500">Shared vocabulary for the writing team.</p>
+          <h1 className="mb-1 text-3xl font-bold text-neutral-900">Glossary</h1>
+          <p className="text-neutral-600">Shared vocabulary for the writing team.</p>
         </div>
-        <div className="rounded-xl border border-dashed border-slate-200 py-24 text-center">
-          <p className="text-base font-semibold text-slate-300">Coming soon</p>
-          <p className="mt-1 text-sm text-slate-400">This section isn&apos;t published yet.</p>
+        <div className="rounded-xl border border-dashed border-neutral-200 py-24 text-center">
+          <p className="text-base font-semibold text-neutral-200">Coming soon</p>
+          <p className="mt-1 text-sm text-neutral-400">This section isn&apos;t published yet.</p>
         </div>
       </div>
     )
@@ -59,8 +59,8 @@ export default async function GlossaryPage({ searchParams }: Props) {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-1 text-3xl font-bold text-slate-900">Glossary</h1>
-        <p className="text-slate-500">Shared vocabulary for the writing team.</p>
+        <h1 className="mb-1 text-3xl font-bold text-neutral-900">Glossary</h1>
+        <p className="text-neutral-600">Shared vocabulary for the writing team.</p>
       </div>
 
       <div className="mb-6">
@@ -70,20 +70,20 @@ export default async function GlossaryPage({ searchParams }: Props) {
       </div>
 
       {entries.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-200 py-16 text-center">
-          <p className="text-slate-500">No terms found.</p>
+        <div className="rounded-xl border border-dashed border-neutral-200 py-16 text-center">
+          <p className="text-neutral-600">No terms found.</p>
         </div>
       ) : isListView ? (
-        <div className="rounded-xl border border-slate-200 bg-white divide-y divide-slate-100">
+        <div className="rounded-xl border border-neutral-200 bg-white divide-y divide-neutral-50">
           {entries.map((term) => (
-            <div key={term.id} className="flex items-start gap-4 px-5 py-4 hover:bg-slate-50 transition-colors">
+            <div key={term.id} className="flex items-start gap-4 px-5 py-4 hover:bg-neutral-50 transition-colors">
               {/* Term */}
               <div className="w-44 shrink-0">
-                <p className="text-sm font-semibold text-slate-900">
+                <p className="text-sm font-semibold text-neutral-900">
                   {term.term_bahasa || term.term}
                 </p>
                 {term.term_bahasa && (
-                  <p className="text-xs text-slate-400">{term.term}</p>
+                  <p className="text-xs text-neutral-400">{term.term}</p>
                 )}
               </div>
 
@@ -94,10 +94,10 @@ export default async function GlossaryPage({ searchParams }: Props) {
 
               {/* Definition + avoid */}
               <div className="min-w-0 flex-1">
-                <p className="text-sm leading-relaxed text-slate-600">{term.definition}</p>
+                <p className="text-sm leading-relaxed text-neutral-600">{term.definition}</p>
                 {term.avoid && term.avoid.length > 0 && (
                   <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                    <span className="text-xs font-medium text-red-500">Avoid</span>
+                    <span className="text-xs font-medium text-crimson">Avoid</span>
                     {term.avoid.map((a) => (
                       <Badge key={a} color="red">{a}</Badge>
                     ))}

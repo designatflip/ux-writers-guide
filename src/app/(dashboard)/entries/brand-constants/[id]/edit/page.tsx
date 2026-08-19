@@ -16,11 +16,11 @@ export default function EditBrandConstantPage() {
     })
   }, [id])
 
-  if (!constant) return <p className="text-slate-500">Loading…</p>
+  if (!constant) return <p className="text-neutral-600">Loading…</p>
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">Edit Brand Constant</h1>
+      <h1 className="mb-6 text-2xl font-bold text-neutral-900">Edit Brand Constant</h1>
       <BrandConstantForm constant={constant} />
     </div>
   )

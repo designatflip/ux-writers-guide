@@ -43,9 +43,9 @@ function ExampleList({ label, accent, items, onChange }: ExampleListProps) {
   }
 
   const wrapColor = accent === 'green'
-    ? 'border-green-200 bg-green-50/60'
-    : 'border-red-200 bg-red-50/60'
-  const labelColor = accent === 'green' ? 'text-green-700' : 'text-red-600'
+    ? 'border-jade-200 bg-jade-100/60'
+    : 'border-crimson-200 bg-crimson-100/60'
+  const labelColor = accent === 'green' ? 'text-jade-700' : 'text-crimson'
 
   return (
     <div>
@@ -56,7 +56,7 @@ function ExampleList({ label, accent, items, onChange }: ExampleListProps) {
             <button
               type="button"
               onClick={() => remove(i)}
-              className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded text-slate-400 hover:bg-white/80 hover:text-slate-600"
+              className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded text-neutral-400 hover:bg-white/80 hover:text-neutral-600"
             >
               ×
             </button>
@@ -67,16 +67,16 @@ function ExampleList({ label, accent, items, onChange }: ExampleListProps) {
                 onChange={(e) => updateText(i, e.target.value)}
                 placeholder="Add example text…"
                 rows={2}
-                className="w-full resize-none bg-transparent pr-6 text-sm text-slate-700 placeholder-slate-400 focus:outline-none"
+                className="w-full resize-none bg-transparent pr-6 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none"
               />
             ) : (
               <div className="pr-6">
                 {uploading.has(i) ? (
-                  <p className="py-4 text-center text-xs text-slate-400">Uploading…</p>
+                  <p className="py-4 text-center text-xs text-neutral-400">Uploading…</p>
                 ) : item.url ? (
                   <div className="space-y-2">
                     <img src={item.url} alt="example" className="max-h-40 rounded object-contain" />
-                    <label className="cursor-pointer text-xs font-medium text-indigo-500 hover:text-indigo-700">
+                    <label className="cursor-pointer text-xs font-medium text-flip-orange hover:text-flip-orange-700">
                       Replace image
                       <input
                         type="file"
@@ -87,7 +87,7 @@ function ExampleList({ label, accent, items, onChange }: ExampleListProps) {
                     </label>
                   </div>
                 ) : (
-                  <label className="flex cursor-pointer flex-col items-center gap-1.5 py-5 text-slate-400 hover:text-slate-600">
+                  <label className="flex cursor-pointer flex-col items-center gap-1.5 py-5 text-neutral-400 hover:text-neutral-600">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="3" y="3" width="18" height="18" rx="2"/>
                       <circle cx="8.5" cy="8.5" r="1.5"/>
@@ -112,14 +112,14 @@ function ExampleList({ label, accent, items, onChange }: ExampleListProps) {
         <button
           type="button"
           onClick={addText}
-          className="flex items-center gap-1 rounded-md border border-dashed border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-700"
+          className="flex items-center gap-1 rounded-md border border-dashed border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:border-neutral-400 hover:text-neutral-900"
         >
           + Add text
         </button>
         <button
           type="button"
           onClick={addImage}
-          className="flex items-center gap-1 rounded-md border border-dashed border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-500 transition-colors hover:border-slate-400 hover:text-slate-700"
+          className="flex items-center gap-1 rounded-md border border-dashed border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-600 transition-colors hover:border-neutral-400 hover:text-neutral-900"
         >
           + Add image
         </button>
@@ -161,20 +161,20 @@ export default function RepeaterFormFields({ rules, onChange }: RepeaterFormFiel
   return (
     <div className="space-y-3">
       {rules.map((rule, i) => (
-        <div key={i} className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-4">
+        <div key={i} className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-indigo-100 text-[11px] font-bold text-indigo-600">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-flip-orange-100 text-[11px] font-bold text-flip-orange">
                 {i + 1}
               </span>
-              <span className="text-xs font-semibold uppercase tracking-wide text-slate-400">Rule</span>
+              <span className="text-xs font-semibold uppercase tracking-wide text-neutral-400">Rule</span>
             </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"
                 onClick={() => moveUp(i)}
                 disabled={i === 0}
-                className="flex h-6 w-6 items-center justify-center rounded text-slate-400 hover:bg-slate-200 hover:text-slate-600 disabled:opacity-30"
+                className="flex h-6 w-6 items-center justify-center rounded text-neutral-400 hover:bg-neutral-200 hover:text-neutral-600 disabled:opacity-30"
                 title="Move up"
               >
                 ↑
@@ -183,7 +183,7 @@ export default function RepeaterFormFields({ rules, onChange }: RepeaterFormFiel
                 type="button"
                 onClick={() => moveDown(i)}
                 disabled={i === rules.length - 1}
-                className="flex h-6 w-6 items-center justify-center rounded text-slate-400 hover:bg-slate-200 hover:text-slate-600 disabled:opacity-30"
+                className="flex h-6 w-6 items-center justify-center rounded text-neutral-400 hover:bg-neutral-200 hover:text-neutral-600 disabled:opacity-30"
                 title="Move down"
               >
                 ↓
@@ -192,7 +192,7 @@ export default function RepeaterFormFields({ rules, onChange }: RepeaterFormFiel
                 <button
                   type="button"
                   onClick={() => onChange(rules.filter((_, idx) => idx !== i))}
-                  className="ml-1 flex h-6 items-center rounded px-2 text-xs text-red-400 hover:bg-red-50 hover:text-red-600"
+                  className="ml-1 flex h-6 items-center rounded px-2 text-xs text-crimson hover:bg-crimson-100 hover:text-crimson"
                 >
                   Remove
                 </button>

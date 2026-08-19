@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic'
 function ComingSoon() {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-1.5 py-6 text-center">
-      <p className="text-sm font-medium text-stone-400">Coming soon</p>
-      <p className="text-xs text-stone-300">This section isn&apos;t published yet.</p>
+      <p className="text-sm font-medium text-neutral-400">Coming soon</p>
+      <p className="text-xs text-neutral-200">This section isn&apos;t published yet.</p>
     </div>
   )
 }
@@ -47,29 +47,29 @@ export default async function Home() {
     <div className="min-h-screen" style={{ backgroundColor: '#f5f2eb' }}>
 
       {/* Header */}
-      <header className="sticky top-0 z-10 border-b border-stone-200 bg-white">
+      <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
             <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8" />
-            <span className="text-sm font-bold text-slate-900">Flip Communication Hub</span>
+            <span className="text-sm font-bold text-neutral-900">Flip Communication Hub</span>
           </Link>
           <nav className="ml-auto flex items-center gap-6">
-            <Link href="/glossary" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Glossary</Link>
-            <Link href="/guidelines" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Guidelines</Link>
-            <Link href="/tone" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Tone</Link>
-            <Link href="/mechanics" className="text-sm text-stone-500 hover:text-stone-900 transition-colors">Mechanics</Link>
-            <Link href="/entries" className="text-sm font-semibold text-stone-900 hover:text-stone-600 transition-colors">Dashboard</Link>
+            <Link href="/glossary" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Glossary</Link>
+            <Link href="/guidelines" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Guidelines</Link>
+            <Link href="/tone" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Tone</Link>
+            <Link href="/mechanics" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Mechanics</Link>
+            <Link href="/entries" className="text-sm font-semibold text-neutral-900 hover:text-neutral-600 transition-colors">Dashboard</Link>
           </nav>
         </div>
       </header>
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
-        <h1 className="mb-5 text-7xl font-black leading-none tracking-tight" style={{ color: '#111827' }}>
+        <h1 className="mb-5 text-5xl font-black leading-none tracking-tight" style={{ color: '#222223' }}>
           Write like{' '}
           <CyclingWord />
         </h1>
-        <p className="mb-8 text-lg leading-relaxed" style={{ color: '#78716c', maxWidth: '38rem' }}>
+        <p className="mb-8 text-lg leading-relaxed" style={{ color: '#747474', maxWidth: '38rem' }}>
           Everything you need to communicate clearly, on-brand, and consistently,
           so we always sound like Flip!
         </p>
@@ -112,16 +112,16 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-white p-5">
               {!vis.glossary ? <ComingSoon /> : termList.length === 0 ? (
-                <p className="text-sm text-stone-400">No terms yet — add the first one in the dashboard.</p>
+                <p className="text-sm text-neutral-400">No terms yet — add the first one in the dashboard.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {visibleTerms.map((t) => (
-                    <Link key={t.id} href="/glossary" className="rounded-full border border-stone-200 bg-stone-50 px-3.5 py-1.5 text-sm text-stone-700 transition-colors hover:border-stone-300">
+                    <Link key={t.id} href="/glossary" className="rounded-full border border-neutral-200 bg-neutral-50 px-3.5 py-1.5 text-sm text-neutral-900 transition-colors hover:border-neutral-200">
                       {t.term_bahasa || t.term}
                     </Link>
                   ))}
                   {termList.length > 6 && (
-                    <Link href="/glossary" className="rounded-full border border-dashed border-stone-300 px-3.5 py-1.5 text-sm text-stone-400 transition-colors hover:border-stone-400">
+                    <Link href="/glossary" className="rounded-full border border-dashed border-neutral-200 px-3.5 py-1.5 text-sm text-neutral-400 transition-colors hover:border-neutral-400">
                       +{termList.length - 6} more
                     </Link>
                   )}
@@ -158,7 +158,7 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-white p-5">
               {!vis.guidelines ? <ComingSoon /> : guidelineList.length === 0 ? (
-                <p className="text-sm text-stone-400">No guidelines yet — add the first one in the dashboard.</p>
+                <p className="text-sm text-neutral-400">No guidelines yet — add the first one in the dashboard.</p>
               ) : (
                 <ol className="flex flex-col gap-3">
                   {visibleGuidelines.map((g, i) => (
@@ -167,7 +167,7 @@ export default async function Home() {
                         <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#EE255C' }}>
                           {String(i + 1).padStart(2, '0')}
                         </span>
-                        <span className="font-medium text-stone-800">{g.title}</span>
+                        <span className="font-medium text-neutral-900">{g.title}</span>
                       </Link>
                     </li>
                   ))}
@@ -211,7 +211,7 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-white p-5">
               {!vis.mechanics ? <ComingSoon /> : ruleList.length === 0 ? (
-                <p className="text-sm text-stone-400">No rules yet — add the first one in the dashboard.</p>
+                <p className="text-sm text-neutral-400">No rules yet — add the first one in the dashboard.</p>
               ) : (
                 <ol className="flex flex-col gap-3">
                   {visibleRules.map((r, i) => (
@@ -219,7 +219,7 @@ export default async function Home() {
                       <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#5786CC' }}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-medium text-stone-800">{r.rule}</span>
+                      <span className="font-medium text-neutral-900">{r.rule}</span>
                     </li>
                   ))}
                   {ruleList.length > 3 && (
@@ -239,7 +239,7 @@ export default async function Home() {
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
-                backgroundColor: '#46BFAE',
+                backgroundColor: '#00A68E',
                 backgroundImage: 'repeating-linear-gradient(-45deg, transparent 0, transparent 14px, rgba(255,255,255,0.07) 14px, rgba(255,255,255,0.07) 15px)',
               }}
             >
@@ -265,11 +265,11 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-white p-5">
               {!vis.tone ? <ComingSoon /> : pillarList.length === 0 ? (
-                <p className="text-sm text-stone-400">No pillars yet — add the first one in the dashboard.</p>
+                <p className="text-sm text-neutral-400">No pillars yet — add the first one in the dashboard.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {pillarList.map((p, i) => {
-                    const pillColors = ['#FFB207', '#EE255C', '#5786CC', '#46BFAE', '#B01D88']
+                    const pillColors = ['#FFB207', '#EE255C', '#5786CC', '#00A68E', '#B01D88']
                     return (
                       <span key={p.id} className="rounded-full px-4 py-1.5 text-sm font-bold text-white" style={{ backgroundColor: pillColors[i % pillColors.length] }}>
                         {p.title}

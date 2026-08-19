@@ -11,28 +11,28 @@ export const metadata = { title: 'Mechanics — Flip Communication Hub' }
 function LegacyRuleCard({ rule }: { rule: MechanicsRule }) {
   return (
     <div
-      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
-      style={{ backgroundColor: '#f5f3ff' }}
+      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
+      style={{ backgroundColor: '#DDE7F5' }}
     >
-      <p className="mb-3 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      <p className="mb-3 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       {(rule.example || rule.dont_example) && (
         <div className={`grid gap-2 ${rule.example && rule.dont_example ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {rule.example && (
-            <div className="rounded-lg border border-green-100 bg-green-50 px-3 py-2">
-              <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
-              <p className="font-mono text-sm text-slate-700">{rule.example}</p>
+            <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
+              <p className="mb-1 text-xs font-medium text-jade">Do this ✓</p>
+              <p className="font-mono text-sm text-neutral-900">{rule.example}</p>
             </div>
           )}
           {rule.dont_example && (
-            <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2">
-              <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
-              <p className="font-mono text-sm text-slate-700">{rule.dont_example}</p>
+            <div className="rounded-lg border border-crimson-100 bg-crimson-100 px-3 py-2">
+              <p className="mb-1 text-xs font-medium text-crimson">Don&apos;t do this ✗</p>
+              <p className="font-mono text-sm text-neutral-900">{rule.dont_example}</p>
             </div>
           )}
         </div>
       )}
       {rule.description && (
-        <p className="mt-3 text-sm leading-relaxed text-slate-500">{rule.description}</p>
+        <p className="mt-3 text-sm leading-relaxed text-neutral-600">{rule.description}</p>
       )}
     </div>
   )
@@ -42,22 +42,22 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
   const data = rule.data as CapitalizationData
   return (
     <div
-      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
-      style={{ backgroundColor: '#f5f3ff' }}
+      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
+      style={{ backgroundColor: '#DDE7F5' }}
     >
-      <p className="mb-1 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      <p className="mb-1 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       {rule.description && (
-        <p className="mb-4 text-sm text-slate-500">{rule.description}</p>
+        <p className="mb-4 text-sm text-neutral-600">{rule.description}</p>
       )}
       {(data.textComponents.length > 0 || data.uiComponents.length > 0) && (
         <div className="grid grid-cols-2 gap-4">
           {data.textComponents.length > 0 && (
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Text components</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">Text components</p>
               <ul className="space-y-1">
                 {data.textComponents.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-slate-700">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
+                  <li key={item} className="flex items-center gap-2 text-sm text-neutral-900">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-flip-orange-300" />
                     {item}
                   </li>
                 ))}
@@ -66,11 +66,11 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
           )}
           {data.uiComponents.length > 0 && (
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">UI components</p>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">UI components</p>
               <ul className="space-y-1">
                 {data.uiComponents.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-slate-700">
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-indigo-400" />
+                  <li key={item} className="flex items-center gap-2 text-sm text-neutral-900">
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-flip-orange-300" />
                     {item}
                   </li>
                 ))}
@@ -86,46 +86,46 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
 function renderExampleItem(item: ExampleItem | string, j: number) {
   // Handle legacy string format stored before the ExampleItem migration
   if (typeof item === 'string') {
-    return <p key={j} className="font-mono text-sm text-slate-700">{item}</p>
+    return <p key={j} className="font-mono text-sm text-neutral-900">{item}</p>
   }
   if (item.type === 'image') {
     return <img key={j} src={item.url} alt="" className="max-h-48 rounded object-contain" />
   }
-  return <p key={j} className="font-mono text-sm text-slate-700">{item.content}</p>
+  return <p key={j} className="font-mono text-sm text-neutral-900">{item.content}</p>
 }
 
 function RepeaterCard({ rule }: { rule: MechanicsRule }) {
   const data = rule.data as RepeaterData
   return (
     <div
-      className="rounded-xl border border-indigo-100 p-5 transition-all hover:border-indigo-200 hover:shadow-sm"
-      style={{ backgroundColor: '#f5f3ff' }}
+      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
+      style={{ backgroundColor: '#DDE7F5' }}
     >
-      <p className="mb-3 text-sm font-semibold text-slate-800">{rule.rule}</p>
+      <p className="mb-3 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       <div className="space-y-4">
         {data.rules.map((entry, i) => (
-          <div key={i} className={i > 0 ? 'border-t border-slate-200 pt-4' : ''}>
+          <div key={i} className={i > 0 ? 'border-t border-neutral-200 pt-4' : ''}>
             {entry.ruleText && (
               <div className="mb-2 flex items-baseline gap-2">
                 <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#5786CC' }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="text-sm font-medium text-slate-700">{entry.ruleText}</p>
+                <p className="text-sm font-medium text-neutral-900">{entry.ruleText}</p>
               </div>
             )}
             {(entry.doExamples.length > 0 || entry.dontExamples.length > 0) && (
               <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                 {entry.doExamples.length > 0 && (
-                  <div className="rounded-lg border border-green-100 bg-green-50 px-3 py-2">
-                    <p className="mb-1 text-xs font-medium text-green-600">Do this ✓</p>
+                  <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
+                    <p className="mb-1 text-xs font-medium text-jade">Do this ✓</p>
                     <div className="space-y-1">
                       {(entry.doExamples as (ExampleItem | string)[]).map(renderExampleItem)}
                     </div>
                   </div>
                 )}
                 {entry.dontExamples.length > 0 && (
-                  <div className="rounded-lg border border-red-100 bg-red-50 px-3 py-2">
-                    <p className="mb-1 text-xs font-medium text-red-500">Don't do this ✗</p>
+                  <div className="rounded-lg border border-crimson-100 bg-crimson-100 px-3 py-2">
+                    <p className="mb-1 text-xs font-medium text-crimson">Don&apos;t do this ✗</p>
                     <div className="space-y-1">
                       {(entry.dontExamples as (ExampleItem | string)[]).map(renderExampleItem)}
                     </div>
@@ -155,12 +155,12 @@ export default async function MechanicsPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="mb-1 text-3xl font-bold text-slate-900">Mechanics</h1>
-          <p className="text-slate-500">The technical rules that keep our writing polished across every channel.</p>
+          <h1 className="mb-1 text-3xl font-bold text-neutral-900">Mechanics</h1>
+          <p className="text-neutral-600">The technical rules that keep our writing polished across every channel.</p>
         </div>
-        <div className="rounded-xl border border-dashed border-slate-200 py-24 text-center">
-          <p className="text-base font-semibold text-slate-300">Coming soon</p>
-          <p className="mt-1 text-sm text-slate-400">This section isn&apos;t published yet.</p>
+        <div className="rounded-xl border border-dashed border-neutral-200 py-24 text-center">
+          <p className="text-base font-semibold text-neutral-200">Coming soon</p>
+          <p className="mt-1 text-sm text-neutral-400">This section isn&apos;t published yet.</p>
         </div>
       </div>
     )
@@ -186,13 +186,13 @@ export default async function MechanicsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-1 text-3xl font-bold text-slate-900">Mechanics</h1>
-        <p className="text-slate-500">The technical rules that keep our writing polished across every channel.</p>
+        <h1 className="mb-1 text-3xl font-bold text-neutral-900">Mechanics</h1>
+        <p className="text-neutral-600">The technical rules that keep our writing polished across every channel.</p>
       </div>
 
       {sorted.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-200 py-16 text-center">
-          <p className="text-slate-500">No mechanics rules published yet.</p>
+        <div className="rounded-xl border border-dashed border-neutral-200 py-16 text-center">
+          <p className="text-neutral-600">No mechanics rules published yet.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-3">
@@ -202,7 +202,7 @@ export default async function MechanicsPage() {
             return (
               <div key={r.id}>
                 {showHeading && (
-                  <h2 className={`${i > 0 ? 'mt-8' : ''} mb-3 border-b border-slate-200 pb-2 text-lg font-semibold text-slate-900`}>
+                  <h2 className={`${i > 0 ? 'mt-8' : ''} mb-3 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}>
                     {r.category}
                   </h2>
                 )}

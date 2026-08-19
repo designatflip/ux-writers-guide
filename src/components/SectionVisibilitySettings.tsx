@@ -22,7 +22,7 @@ function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void 
       role="switch"
       aria-checked={on}
       onClick={() => onChange(!on)}
-      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${on ? 'bg-indigo-600' : 'bg-slate-200'}`}
+      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-flip-orange focus:ring-offset-2 ${on ? 'bg-flip-orange' : 'bg-neutral-200'}`}
     >
       <span
         className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ${on ? 'translate-x-5' : 'translate-x-0'}`}
@@ -68,27 +68,27 @@ export default function SectionVisibilitySettings() {
     }
   }
 
-  if (loading) return <p className="text-sm text-slate-400">Loading…</p>
+  if (loading) return <p className="text-sm text-neutral-400">Loading…</p>
 
   return (
-    <div className="max-w-lg rounded-xl border border-slate-200 bg-white p-6">
+    <div className="max-w-lg rounded-xl border border-neutral-200 bg-white p-6">
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400 mb-0.5">Section Visibility</p>
-          <p className="text-sm text-slate-500">Control which sections are visible on the public homepage.</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-neutral-400 mb-0.5">Section Visibility</p>
+          <p className="text-sm text-neutral-600">Control which sections are visible on the public homepage.</p>
         </div>
-        {saving && <span className="text-xs text-slate-400">Saving…</span>}
-        {saved && !saving && <span className="text-xs text-green-600">Saved ✓</span>}
+        {saving && <span className="text-xs text-neutral-400">Saving…</span>}
+        {saved && !saving && <span className="text-xs text-jade">Saved ✓</span>}
       </div>
 
-      <div className="divide-y divide-slate-100">
+      <div className="divide-y divide-neutral-50">
         {SECTIONS.map(({ key, label, description }) => (
           <div key={key} className="flex items-center justify-between py-4">
             <div>
-              <p className={`text-sm font-medium ${visibility[key] ? 'text-slate-900' : 'text-slate-400'}`}>
+              <p className={`text-sm font-medium ${visibility[key] ? 'text-neutral-900' : 'text-neutral-400'}`}>
                 {label}
               </p>
-              <p className="text-xs text-slate-400">{description}</p>
+              <p className="text-xs text-neutral-400">{description}</p>
             </div>
             <Toggle on={visibility[key]} onChange={(v) => handleToggle(key, v)} />
           </div>

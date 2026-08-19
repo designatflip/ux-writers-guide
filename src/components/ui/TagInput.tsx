@@ -38,19 +38,19 @@ export default function TagInput({ label, items, onChange, placeholder = 'Type a
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label className="text-sm font-medium text-slate-700">{label}</label>
+        <label className="text-sm font-medium text-neutral-900">{label}</label>
       )}
-      <div className="min-h-[42px] flex flex-wrap gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100">
+      <div className="min-h-[42px] flex flex-wrap gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-2 focus-within:border-flip-orange-300 focus-within:ring-2 focus-within:ring-flip-orange-100">
         {items.map((item, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-1 rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700"
+            className="inline-flex items-center gap-1 rounded-full bg-flip-orange-100 px-2.5 py-0.5 text-xs font-medium text-flip-orange-700"
           >
             {item}
             <button
               type="button"
               onClick={() => removeItem(i)}
-              className="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full text-indigo-400 hover:bg-indigo-200 hover:text-indigo-700"
+              className="ml-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full text-flip-orange-300 hover:bg-flip-orange-200 hover:text-flip-orange-700"
             >
               ×
             </button>
@@ -63,7 +63,7 @@ export default function TagInput({ label, items, onChange, placeholder = 'Type a
           onKeyDown={handleKeyDown}
           onBlur={() => commitValue(inputValue)}
           placeholder={items.length === 0 ? placeholder : ''}
-          className="min-w-[120px] flex-1 bg-transparent text-sm text-slate-900 placeholder-slate-400 outline-none"
+          className="min-w-[120px] flex-1 bg-transparent text-sm text-neutral-900 placeholder-neutral-400 outline-none"
         />
       </div>
     </div>

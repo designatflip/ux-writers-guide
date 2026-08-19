@@ -5,22 +5,22 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-slate-900">Settings</h1>
+      <h1 className="mb-6 text-2xl font-bold text-neutral-900">Settings</h1>
 
       <div className="space-y-6">
         <SectionVisibilitySettings />
 
-        <div className="max-w-lg rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+        <div className="max-w-lg rounded-xl border border-neutral-200 bg-white p-6 space-y-4">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-1">Storage</p>
-            <p className="text-sm font-medium text-slate-900">Supabase (cloud)</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-neutral-400 mb-1">Storage</p>
+            <p className="text-sm font-medium text-neutral-900">Supabase (cloud)</p>
             {projectUrl && (
-              <p className="mt-0.5 text-xs text-slate-400 font-mono truncate">{projectUrl}</p>
+              <p className="mt-0.5 text-xs text-neutral-400 font-mono truncate">{projectUrl}</p>
             )}
           </div>
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-400 mb-1">Authentication</p>
-            <p className="text-sm text-slate-500">Magic link — restricted to authorized writers.</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-neutral-400 mb-1">Authentication</p>
+            <p className="text-sm text-neutral-600">Magic link — restricted to authorized writers.</p>
           </div>
         </div>
       </div>

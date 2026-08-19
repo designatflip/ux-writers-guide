@@ -28,22 +28,22 @@ export default function DashboardProductsPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Products</h1>
-          <p className="text-sm text-slate-500">Manage the products Brand Constants and Tone of Voice belong to</p>
+          <h1 className="text-2xl font-bold text-neutral-900">Products</h1>
+          <p className="text-sm text-neutral-600">Manage the products Brand Constants and Tone of Voice belong to</p>
         </div>
         <Link href="/entries/products/new"><Button>New product</Button></Link>
       </div>
 
       {products.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-200 py-20 text-center">
-          <p className="mb-4 text-slate-500">No products yet.</p>
+        <div className="rounded-xl border border-dashed border-neutral-200 py-20 text-center">
+          <p className="mb-4 text-neutral-600">No products yet.</p>
           <Link href="/entries/products/new"><Button>Create first product</Button></Link>
         </div>
       ) : (
         <>
           <div className="mb-4 flex items-center gap-2">
             <div className="relative flex-1 min-w-48 max-w-sm">
-              <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
               </svg>
               <input
@@ -51,39 +51,39 @@ export default function DashboardProductsPage() {
                 placeholder="Search products…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full rounded-lg border border-slate-200 bg-white py-2 pl-8 pr-3 text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                className="w-full rounded-lg border border-neutral-200 bg-white py-2 pl-8 pr-3 text-sm text-neutral-900 placeholder-neutral-400 focus:border-flip-orange-300 focus:outline-none focus:ring-2 focus:ring-flip-orange-100"
               />
             </div>
             {search && (
-              <span className="text-xs text-slate-500">{filtered.length} of {products.length}</span>
+              <span className="text-xs text-neutral-600">{filtered.length} of {products.length}</span>
             )}
           </div>
 
           {filtered.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-200 py-12 text-center">
-              <p className="text-slate-500">No products match your search.</p>
+            <div className="rounded-xl border border-dashed border-neutral-200 py-12 text-center">
+              <p className="text-neutral-600">No products match your search.</p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+            <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50 text-left">
-                    <th className="px-4 py-3 font-medium text-slate-600">Name</th>
-                    <th className="px-4 py-3 font-medium text-slate-600">Slug</th>
-                    <th className="px-4 py-3 font-medium text-slate-600">Order</th>
-                    <th className="px-4 py-3 font-medium text-slate-600">Updated</th>
+                  <tr className="border-b border-neutral-200 bg-neutral-50 text-left">
+                    <th className="px-4 py-3 font-medium text-neutral-600">Name</th>
+                    <th className="px-4 py-3 font-medium text-neutral-600">Slug</th>
+                    <th className="px-4 py-3 font-medium text-neutral-600">Order</th>
+                    <th className="px-4 py-3 font-medium text-neutral-600">Updated</th>
                     <th className="px-4 py-3" />
                   </tr>
                 </thead>
                 <tbody>
                   {filtered.map((p) => (
-                    <tr key={p.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
-                      <td className="px-4 py-3 font-medium text-slate-900">{p.name}</td>
-                      <td className="px-4 py-3 font-mono text-xs text-slate-500">{p.slug}</td>
-                      <td className="px-4 py-3 text-slate-600">{p.order_index}</td>
-                      <td className="px-4 py-3 text-slate-500">{formatDate(p.updated_at)}</td>
+                    <tr key={p.id} className="border-b border-neutral-50 last:border-0 hover:bg-neutral-50">
+                      <td className="px-4 py-3 font-medium text-neutral-900">{p.name}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-neutral-600">{p.slug}</td>
+                      <td className="px-4 py-3 text-neutral-600">{p.order_index}</td>
+                      <td className="px-4 py-3 text-neutral-600">{formatDate(p.updated_at)}</td>
                       <td className="px-4 py-3">
-                        <Link href={`/entries/products/${p.id}/edit`} className="font-medium text-indigo-600 hover:text-indigo-800">Edit</Link>
+                        <Link href={`/entries/products/${p.id}/edit`} className="font-medium text-flip-orange hover:text-flip-orange-900">Edit</Link>
                       </td>
                     </tr>
                   ))}

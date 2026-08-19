@@ -115,7 +115,7 @@ export default function ProductForm({ product }: ProductFormProps) {
         onChange={(e) => setOrderIndex(e.target.value)}
       />
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-crimson">{error}</p>}
 
       <div className="flex items-center gap-3 pt-2">
         <Button type="submit" loading={loading}>

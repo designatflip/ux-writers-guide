@@ -45,15 +45,15 @@ export default function DashboardSidebar({ userEmail }: DashboardSidebarProps) {
   }
 
   return (
-    <aside className="flex h-screen w-56 flex-col border-r border-slate-200 bg-white px-3 py-5">
-      <Link href="/" className="mb-6 px-2 text-base font-semibold text-slate-900 hover:text-indigo-600 transition-colors">
+    <aside className="flex h-screen w-56 flex-col border-r border-neutral-200 bg-white px-3 py-5">
+      <Link href="/" className="mb-6 px-2 text-base font-semibold text-neutral-900 hover:text-flip-orange transition-colors">
         Flip Communication Hub
       </Link>
 
       <nav className="flex flex-1 flex-col gap-5">
         {sections.map((section) => (
           <div key={section.label}>
-            <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">
               {section.label}
             </p>
             <div className="flex flex-col gap-0.5">
@@ -65,8 +65,8 @@ export default function DashboardSidebar({ userEmail }: DashboardSidebarProps) {
                     href={item.href}
                     className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                       active
-                        ? 'bg-indigo-50 text-indigo-700'
-                        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                        ? 'bg-flip-orange-100 text-flip-orange-700'
+                        : 'text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
                     }`}
                   >
                     {item.label}
@@ -79,12 +79,12 @@ export default function DashboardSidebar({ userEmail }: DashboardSidebarProps) {
       </nav>
 
       {userEmail && (
-        <div className="mt-4 border-t border-slate-100 px-2 pt-4">
-          <p className="mb-2 truncate text-xs text-slate-500" title={userEmail}>{userEmail}</p>
+        <div className="mt-4 border-t border-neutral-50 px-2 pt-4">
+          <p className="mb-2 truncate text-xs text-neutral-600" title={userEmail}>{userEmail}</p>
           <button
             type="button"
             onClick={handleSignOut}
-            className="text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors"
+            className="text-xs font-medium text-neutral-600 hover:text-neutral-900 transition-colors"
           >
             Sign out
           </button>

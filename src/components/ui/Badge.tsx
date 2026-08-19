@@ -6,11 +6,11 @@ interface BadgeProps {
 }
 
 const colorClasses: Record<Color, string> = {
-  indigo: 'bg-indigo-50 text-indigo-700 ring-indigo-600/20',
-  slate: 'bg-slate-100 text-slate-700 ring-slate-500/20',
-  green: 'bg-green-50 text-green-700 ring-green-600/20',
-  amber: 'bg-amber-50 text-amber-700 ring-amber-600/20',
-  red: 'bg-red-50 text-red-700 ring-red-600/20',
+  indigo: 'bg-flip-orange-100 text-flip-orange-900 ring-flip-orange/20',
+  slate: 'bg-neutral-50 text-neutral-900 ring-neutral-400/20',
+  green: 'bg-jade-100 text-jade-900 ring-jade/20',
+  amber: 'bg-golden-100 text-golden-900 ring-golden/20',
+  red: 'bg-crimson-100 text-crimson-900 ring-crimson/20',
 }
 
 export default function Badge({ children, color = 'slate' }: BadgeProps) {
