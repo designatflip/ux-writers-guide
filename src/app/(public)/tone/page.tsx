@@ -34,8 +34,7 @@ export default async function TonePage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-1 text-3xl font-bold text-neutral-900">Tone of Voice</h1>
-        <p className="text-neutral-600">Our personality on the page — how we sound in everything we write, per product.</p>
+        <h1 className="text-3xl font-bold text-neutral-900">Tone of Voice</h1>
       </div>
 
       <div className="mb-10">
