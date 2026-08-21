@@ -146,6 +146,10 @@ function MechanicsRuleCard({ rule }: { rule: MechanicsRule }) {
   return <RepeaterCard rule={rule} />
 }
 
+function slugify(s: string) {
+  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function MechanicsPage() {
@@ -183,6 +187,10 @@ export default async function MechanicsPage() {
     return diff !== 0 ? diff : (a.order_index ?? 0) - (b.order_index ?? 0)
   })
 
+  const categoriesPresent = Array.from(
+    new Set(sorted.map((r) => r.category).filter((c): c is string => Boolean(c)))
+  )
+
   return (
     <div>
       <div className="mb-8">
@@ -195,21 +203,42 @@ export default async function MechanicsPage() {
           <p className="text-neutral-600">No mechanics rules published yet.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-3">
-          {sorted.map((r, i) => {
-            const prevCategory = i > 0 ? sorted[i - 1].category : null
-            const showHeading = r.category && r.category !== prevCategory
-            return (
-              <div key={r.id}>
-                {showHeading && (
-                  <h2 className={`${i > 0 ? 'mt-8' : ''} mb-3 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}>
-                    {r.category}
-                  </h2>
-                )}
-                <MechanicsRuleCard rule={r as MechanicsRule} />
-              </div>
-            )
-          })}
+        <div className="flex items-start gap-10">
+          {categoriesPresent.length > 1 && (
+            <aside className="sticky top-24 hidden w-44 shrink-0 md:block">
+              <nav className="flex flex-col gap-1 border-l border-neutral-200 pl-4">
+                {categoriesPresent.map((c) => (
+                  <a
+                    key={c}
+                    href={`#${slugify(c)}`}
+                    className="py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900"
+                  >
+                    {c}
+                  </a>
+                ))}
+              </nav>
+            </aside>
+          )}
+
+          <div className="flex min-w-0 flex-1 flex-col gap-3">
+            {sorted.map((r, i) => {
+              const prevCategory = i > 0 ? sorted[i - 1].category : null
+              const showHeading = r.category && r.category !== prevCategory
+              return (
+                <div key={r.id}>
+                  {showHeading && (
+                    <h2
+                      id={slugify(r.category!)}
+                      className={`${i > 0 ? 'mt-8' : ''} mb-3 scroll-mt-24 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}
+                    >
+                      {r.category}
+                    </h2>
+                  )}
+                  <MechanicsRuleCard rule={r as MechanicsRule} />
+                </div>
+              )
+            })}
+          </div>
         </div>
       )}
     </div>

@@ -53,13 +53,7 @@ export default async function Home() {
             <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8" />
             <span className="text-sm font-bold text-neutral-900">Flip Communication Hub</span>
           </Link>
-          <nav className="ml-auto flex items-center gap-6">
-            <Link href="/glossary" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Glossary</Link>
-            <Link href="/guidelines" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Guidelines</Link>
-            <Link href="/tone" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Tone</Link>
-            <Link href="/mechanics" className="text-sm text-neutral-600 hover:text-neutral-900 transition-colors">Mechanics</Link>
-            <Link href="/entries" className="text-sm font-semibold text-neutral-900 hover:text-neutral-600 transition-colors">Dashboard</Link>
-          </nav>
+          <Link href="/entries" className="ml-auto text-sm font-semibold text-neutral-900 hover:text-neutral-600 transition-colors">Dashboard</Link>
         </div>
       </header>
 
