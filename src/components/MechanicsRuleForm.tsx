@@ -207,7 +207,7 @@ export default function MechanicsRuleForm({ rule }: MechanicsRuleFormProps) {
           Cancel
         </Button>
         {isEditing && (
-          <Button type="button" variant="danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
+          <Button type="button" variant="ghost-danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
             Delete
           </Button>
         )}

@@ -296,7 +296,7 @@ export default function GuidelineForm({ guideline }: GuidelineFormProps) {
             Cancel
           </Button>
           {isEditing && (
-            <Button type="button" variant="danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
+            <Button type="button" variant="ghost-danger" className="ml-auto" onClick={handleDelete} disabled={loading}>
               Delete
             </Button>
           )}

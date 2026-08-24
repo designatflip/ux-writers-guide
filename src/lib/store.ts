@@ -7,7 +7,7 @@ export const productStore = {
     const { data } = await supabase
       .from('products')
       .select('*')
-      .order('order_index', { ascending: true })
+      .order('updated_at', { ascending: false })
     return data ?? []
   },
 
@@ -87,7 +87,7 @@ export const guidelineStore = {
     const { data } = await supabase
       .from('guidelines')
       .select('*')
-      .order('order_index', { ascending: true })
+      .order('updated_at', { ascending: false })
     return data ?? []
   },
 
@@ -127,7 +127,7 @@ export const tonePillarStore = {
     const { data } = await supabase
       .from('tone_pillars')
       .select('*')
-      .order('order_index', { ascending: true })
+      .order('updated_at', { ascending: false })
     return data ?? []
   },
 
@@ -176,7 +176,7 @@ export const brandConstantStore = {
     const { data } = await supabase
       .from('brand_constants')
       .select('*')
-      .order('order_index', { ascending: true })
+      .order('updated_at', { ascending: false })
     return data ?? []
   },
 
@@ -225,7 +225,7 @@ export const mechanicsRuleStore = {
     const { data } = await supabase
       .from('mechanics_rules')
       .select('*')
-      .order('order_index', { ascending: true })
+      .order('updated_at', { ascending: false })
     return data ?? []
   },
 
