@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { getSearchData } from '@/lib/search-data'
 import CyclingWord from '@/components/CyclingWord'
 import HomeSearch from '@/components/HomeSearch'
 
@@ -17,19 +18,12 @@ function ComingSoon() {
 export default async function Home() {
   const supabase = await createClient()
 
-  const [{ data: terms }, { data: guidelines }, { data: pillars }, { data: mechRules }, { data: siteSettings }] =
-    await Promise.all([
-      supabase.from('glossary_terms').select('id, term, term_bahasa, category').order('term'),
-      supabase.from('guidelines').select('id, title, slug').order('order_index'),
-      supabase.from('tone_pillars').select('id, title').order('order_index'),
-      supabase.from('mechanics_rules').select('id, rule, category').order('order_index'),
-      supabase.from('site_settings').select('value').eq('key', 'section_visibility').single(),
-    ])
+  const [searchData, { data: siteSettings }] = await Promise.all([
+    getSearchData(),
+    supabase.from('site_settings').select('value').eq('key', 'section_visibility').single(),
+  ])
 
-  const termList = terms ?? []
-  const guidelineList = guidelines ?? []
-  const pillarList = pillars ?? []
-  const ruleList = mechRules ?? []
+  const { terms: termList, guidelines: guidelineList, pillars: pillarList, rules: ruleList, products: productList } = searchData
 
   const rawVis = (siteSettings as { value?: Record<string, boolean> } | null)?.value ?? {}
   const vis = {
@@ -67,7 +61,7 @@ export default async function Home() {
           Everything you need to communicate clearly, on-brand, and consistently,
           so we always sound like Flip!
         </p>
-        <HomeSearch terms={termList} guidelines={guidelineList} rules={ruleList} />
+        <HomeSearch terms={termList} guidelines={guidelineList} rules={ruleList} pillars={pillarList} products={productList} />
       </section>
 
       {/* Section cards */}
