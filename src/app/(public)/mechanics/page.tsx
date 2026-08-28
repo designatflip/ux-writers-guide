@@ -1,32 +1,55 @@
 import { createClient } from '@/lib/supabase/server'
 import { MECHANICS_CATEGORIES } from '@/lib/mechanics-categories'
 import { getSectionVisibility } from '@/lib/site-settings'
+import Badge from '@/components/ui/Badge'
 import type { MechanicsRule, ExampleItem, CapitalizationData, RepeaterData } from '@/types'
 
 export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Mechanics — Flip Communication Hub' }
 
+// ── Category accent colors ──────────────────────────────────────────────────────
+// Jade/crimson are reserved site-wide for Do/Don't semantics, so category accents
+// draw from the rest of the brand palette instead.
+
+const CATEGORY_ACCENT: Record<string, string> = {
+  'Punctuation': '#5786CC', // sapphire
+  'Capitalization': '#FFB207', // golden
+  'Numbering/Date & Time': '#B01D88', // mauve
+  'Text Formatting': '#FD6542', // flip orange
+}
+const DEFAULT_ACCENT = '#AAABAD' // neutral-400
+
+function getAccent(category: string | null) {
+  return (category && CATEGORY_ACCENT[category]) || DEFAULT_ACCENT
+}
+
 // ── Card variants ─────────────────────────────────────────────────────────────
+
+function RuleCardShell({ category, children }: { category: string | null; children: React.ReactNode }) {
+  return (
+    <div className="flex overflow-hidden rounded-xl border border-neutral-200 bg-white transition-all hover:border-neutral-300 hover:shadow-sm">
+      <div className="w-1 shrink-0" style={{ backgroundColor: getAccent(category) }} />
+      <div className="min-w-0 flex-1 p-5">{children}</div>
+    </div>
+  )
+}
 
 function LegacyRuleCard({ rule }: { rule: MechanicsRule }) {
   return (
-    <div
-      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
-      style={{ backgroundColor: '#DDE7F5' }}
-    >
+    <RuleCardShell category={rule.category}>
       <p className="mb-3 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       {(rule.example || rule.dont_example) && (
         <div className={`grid gap-2 ${rule.example && rule.dont_example ? 'grid-cols-2' : 'grid-cols-1'}`}>
           {rule.example && (
             <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
-              <p className="mb-1 text-xs font-medium text-jade">Do this ✓</p>
-              <p className="font-mono text-sm text-neutral-900">{rule.example}</p>
+              <Badge color="green">Do ✓</Badge>
+              <p className="mt-1.5 font-mono text-sm text-neutral-900">{rule.example}</p>
             </div>
           )}
           {rule.dont_example && (
             <div className="rounded-lg border border-crimson-100 bg-crimson-100 px-3 py-2">
-              <p className="mb-1 text-xs font-medium text-crimson">Don&apos;t do this ✗</p>
-              <p className="font-mono text-sm text-neutral-900">{rule.dont_example}</p>
+              <Badge color="red">Don&apos;t ✗</Badge>
+              <p className="mt-1.5 font-mono text-sm text-neutral-900">{rule.dont_example}</p>
             </div>
           )}
         </div>
@@ -34,17 +57,14 @@ function LegacyRuleCard({ rule }: { rule: MechanicsRule }) {
       {rule.description && (
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">{rule.description}</p>
       )}
-    </div>
+    </RuleCardShell>
   )
 }
 
 function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
   const data = rule.data as CapitalizationData
   return (
-    <div
-      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
-      style={{ backgroundColor: '#DDE7F5' }}
-    >
+    <RuleCardShell category={rule.category}>
       <p className="mb-1 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       {rule.description && (
         <p className="mb-4 text-sm text-neutral-600">{rule.description}</p>
@@ -79,7 +99,7 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
           )}
         </div>
       )}
-    </div>
+    </RuleCardShell>
   )
 }
 
@@ -96,19 +116,20 @@ function renderExampleItem(item: ExampleItem | string, j: number) {
 
 function RepeaterCard({ rule }: { rule: MechanicsRule }) {
   const data = rule.data as RepeaterData
+  const accent = getAccent(rule.category)
   return (
-    <div
-      className="rounded-xl border border-flip-orange-100 p-5 transition-all hover:border-flip-orange-200 hover:shadow-sm"
-      style={{ backgroundColor: '#DDE7F5' }}
-    >
+    <RuleCardShell category={rule.category}>
       <p className="mb-3 text-sm font-semibold text-neutral-900">{rule.rule}</p>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {data.rules.map((entry, i) => (
-          <div key={i} className={i > 0 ? 'border-t border-neutral-200 pt-4' : ''}>
+          <div key={i} className="rounded-lg border border-neutral-100 bg-neutral-50 p-4">
             {entry.ruleText && (
-              <div className="mb-2 flex items-baseline gap-2">
-                <span className="shrink-0 text-xs font-bold tabular-nums" style={{ color: '#5786CC' }}>
-                  {String(i + 1).padStart(2, '0')}
+              <div className="mb-2 flex items-baseline gap-2.5">
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums text-white"
+                  style={{ backgroundColor: accent }}
+                >
+                  {i + 1}
                 </span>
                 <p className="text-sm font-medium text-neutral-900">{entry.ruleText}</p>
               </div>
@@ -117,16 +138,16 @@ function RepeaterCard({ rule }: { rule: MechanicsRule }) {
               <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
                 {entry.doExamples.length > 0 && (
                   <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
-                    <p className="mb-1 text-xs font-medium text-jade">Do this ✓</p>
-                    <div className="space-y-1">
+                    <Badge color="green">Do ✓</Badge>
+                    <div className="mt-1.5 space-y-1">
                       {(entry.doExamples as (ExampleItem | string)[]).map(renderExampleItem)}
                     </div>
                   </div>
                 )}
                 {entry.dontExamples.length > 0 && (
                   <div className="rounded-lg border border-crimson-100 bg-crimson-100 px-3 py-2">
-                    <p className="mb-1 text-xs font-medium text-crimson">Don&apos;t do this ✗</p>
-                    <div className="space-y-1">
+                    <Badge color="red">Don&apos;t ✗</Badge>
+                    <div className="mt-1.5 space-y-1">
                       {(entry.dontExamples as (ExampleItem | string)[]).map(renderExampleItem)}
                     </div>
                   </div>
@@ -136,7 +157,7 @@ function RepeaterCard({ rule }: { rule: MechanicsRule }) {
           </div>
         ))}
       </div>
-    </div>
+    </RuleCardShell>
   )
 }
 
@@ -211,8 +232,9 @@ export default async function MechanicsPage() {
                   <a
                     key={c}
                     href={`#${slugify(c)}`}
-                    className="py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900"
+                    className="flex items-center gap-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900"
                   >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(c) }} />
                     {c}
                   </a>
                 ))}
@@ -224,14 +246,19 @@ export default async function MechanicsPage() {
             {sorted.map((r, i) => {
               const prevCategory = i > 0 ? sorted[i - 1].category : null
               const showHeading = r.category && r.category !== prevCategory
+              const categoryCount = showHeading ? sorted.filter((x) => x.category === r.category).length : 0
               return (
                 <div key={r.id}>
                   {showHeading && (
                     <h2
                       id={slugify(r.category!)}
-                      className={`${i > 0 ? 'mt-8' : ''} mb-3 scroll-mt-24 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}
+                      className={`${i > 0 ? 'mt-12' : ''} mb-3 flex scroll-mt-24 items-center gap-2 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}
                     >
+                      <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(r.category) }} />
                       {r.category}
+                      <span className="text-sm font-normal text-neutral-400">
+                        · {categoryCount} {categoryCount === 1 ? 'rule' : 'rules'}
+                      </span>
                     </h2>
                   )}
                   <MechanicsRuleCard rule={r as MechanicsRule} />
