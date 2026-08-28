@@ -39,7 +39,7 @@ function LegacyRuleCard({ rule }: { rule: MechanicsRule }) {
     <RuleCardShell category={rule.category}>
       <p className="mb-3 text-sm font-semibold text-neutral-900">{rule.rule}</p>
       {(rule.example || rule.dont_example) && (
-        <div className={`grid gap-2 ${rule.example && rule.dont_example ? 'grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`grid gap-2 ${rule.example && rule.dont_example ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
           {rule.example && (
             <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
               <Badge color="green">Do ✓</Badge>
@@ -70,7 +70,7 @@ function CapitalizationCard({ rule }: { rule: MechanicsRule }) {
         <p className="mb-4 text-sm text-neutral-600">{rule.description}</p>
       )}
       {(data.textComponents.length > 0 || data.uiComponents.length > 0) && (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {data.textComponents.length > 0 && (
             <div>
               <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">Text components</p>
@@ -135,7 +135,7 @@ function RepeaterCard({ rule }: { rule: MechanicsRule }) {
               </div>
             )}
             {(entry.doExamples.length > 0 || entry.dontExamples.length > 0) && (
-              <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+              <div className={`grid gap-2 ${entry.doExamples.length > 0 && entry.dontExamples.length > 0 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
                 {entry.doExamples.length > 0 && (
                   <div className="rounded-lg border border-jade-100 bg-jade-100 px-3 py-2">
                     <Badge color="green">Do ✓</Badge>
@@ -224,49 +224,66 @@ export default async function MechanicsPage() {
           <p className="text-neutral-600">No mechanics rules published yet.</p>
         </div>
       ) : (
-        <div className="flex items-start gap-10">
+        <>
           {categoriesPresent.length > 1 && (
-            <aside className="sticky top-24 hidden w-44 shrink-0 md:block">
-              <nav className="flex flex-col gap-1 border-l border-neutral-200 pl-4">
-                {categoriesPresent.map((c) => (
-                  <a
-                    key={c}
-                    href={`#${slugify(c)}`}
-                    className="flex items-center gap-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900"
-                  >
-                    <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(c) }} />
-                    {c}
-                  </a>
-                ))}
-              </nav>
-            </aside>
+            <nav className="mb-6 flex gap-2 overflow-x-auto pb-2 md:hidden">
+              {categoriesPresent.map((c) => (
+                <a
+                  key={c}
+                  href={`#${slugify(c)}`}
+                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm text-neutral-700 transition-colors hover:border-neutral-300"
+                >
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(c) }} />
+                  {c}
+                </a>
+              ))}
+            </nav>
           )}
 
-          <div className="flex min-w-0 flex-1 flex-col gap-3">
-            {sorted.map((r, i) => {
-              const prevCategory = i > 0 ? sorted[i - 1].category : null
-              const showHeading = r.category && r.category !== prevCategory
-              const categoryCount = showHeading ? sorted.filter((x) => x.category === r.category).length : 0
-              return (
-                <div key={r.id}>
-                  {showHeading && (
-                    <h2
-                      id={slugify(r.category!)}
-                      className={`${i > 0 ? 'mt-12' : ''} mb-3 flex scroll-mt-24 items-center gap-2 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}
+          <div className="flex items-start gap-10">
+            {categoriesPresent.length > 1 && (
+              <aside className="sticky top-24 hidden w-44 shrink-0 md:block">
+                <nav className="flex flex-col gap-1 border-l border-neutral-200 pl-4">
+                  {categoriesPresent.map((c) => (
+                    <a
+                      key={c}
+                      href={`#${slugify(c)}`}
+                      className="flex items-center gap-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900"
                     >
-                      <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(r.category) }} />
-                      {r.category}
-                      <span className="text-sm font-normal text-neutral-400">
-                        · {categoryCount} {categoryCount === 1 ? 'rule' : 'rules'}
-                      </span>
-                    </h2>
-                  )}
-                  <MechanicsRuleCard rule={r as MechanicsRule} />
-                </div>
-              )
-            })}
+                      <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(c) }} />
+                      {c}
+                    </a>
+                  ))}
+                </nav>
+              </aside>
+            )}
+
+            <div className="flex min-w-0 flex-1 flex-col gap-3">
+              {sorted.map((r, i) => {
+                const prevCategory = i > 0 ? sorted[i - 1].category : null
+                const showHeading = r.category && r.category !== prevCategory
+                const categoryCount = showHeading ? sorted.filter((x) => x.category === r.category).length : 0
+                return (
+                  <div key={r.id}>
+                    {showHeading && (
+                      <h2
+                        id={slugify(r.category!)}
+                        className={`${i > 0 ? 'mt-12' : ''} mb-3 flex scroll-mt-24 items-center gap-2 border-b border-neutral-200 pb-2 text-lg font-semibold text-neutral-900`}
+                      >
+                        <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: getAccent(r.category) }} />
+                        {r.category}
+                        <span className="text-sm font-normal text-neutral-400">
+                          · {categoryCount} {categoryCount === 1 ? 'rule' : 'rules'}
+                        </span>
+                      </h2>
+                    )}
+                    <MechanicsRuleCard rule={r as MechanicsRule} />
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   )

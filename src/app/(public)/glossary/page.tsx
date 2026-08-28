@@ -76,9 +76,9 @@ export default async function GlossaryPage({ searchParams }: Props) {
       ) : isListView ? (
         <div className="rounded-xl border border-neutral-200 bg-white divide-y divide-neutral-50">
           {entries.map((term) => (
-            <div key={term.id} className="flex items-start gap-4 px-5 py-4 hover:bg-neutral-50 transition-colors">
+            <div key={term.id} className="flex flex-col gap-1.5 px-5 py-4 hover:bg-neutral-50 transition-colors sm:flex-row sm:items-start sm:gap-4">
               {/* Term */}
-              <div className="w-44 shrink-0">
+              <div className="w-full sm:w-44 sm:shrink-0">
                 <p className="text-sm font-semibold text-neutral-900">
                   {term.term_bahasa || term.term}
                 </p>
@@ -88,9 +88,11 @@ export default async function GlossaryPage({ searchParams }: Props) {
               </div>
 
               {/* Category */}
-              <div className="w-28 shrink-0 pt-0.5">
-                {term.category && <Badge color="indigo">{term.category}</Badge>}
-              </div>
+              {term.category && (
+                <div className="w-full sm:w-28 sm:shrink-0 sm:pt-0.5">
+                  <Badge color="indigo">{term.category}</Badge>
+                </div>
+              )}
 
               {/* Definition + avoid */}
               <div className="min-w-0 flex-1">

@@ -53,7 +53,7 @@ export default async function Home() {
 
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
-        <h1 className="mb-5 text-7xl font-semibold leading-none tracking-tight" style={{ color: '#222223' }}>
+        <h1 className="mb-5 text-4xl font-semibold leading-none tracking-tight sm:text-5xl md:text-7xl" style={{ color: '#222223' }}>
           Write like{' '}
           <CyclingWord />
         </h1>
@@ -66,10 +66,10 @@ export default async function Home() {
 
       {/* Section cards */}
       <section className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="grid grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
 
           {/* Glossary — amber, col-span-3 */}
-          <div className="col-span-3 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+          <div className="flex flex-col overflow-hidden rounded-2xl shadow-sm md:col-span-3">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -119,7 +119,7 @@ export default async function Home() {
           </div>
 
           {/* Guidelines — red, col-span-2 */}
-          <div className="col-span-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+          <div className="flex flex-col overflow-hidden rounded-2xl shadow-sm md:col-span-2">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -172,7 +172,7 @@ export default async function Home() {
           </div>
 
           {/* Mechanics — blue, col-span-2 */}
-          <div className="col-span-2 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+          <div className="flex flex-col overflow-hidden rounded-2xl shadow-sm md:col-span-2">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{
@@ -223,7 +223,7 @@ export default async function Home() {
           </div>
 
           {/* Tone — lime green, col-span-3 */}
-          <div className="col-span-3 flex flex-col overflow-hidden rounded-2xl shadow-sm">
+          <div className="flex flex-col overflow-hidden rounded-2xl shadow-sm md:col-span-3">
             <div
               className="relative overflow-hidden p-6 pb-10"
               style={{

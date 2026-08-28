@@ -98,7 +98,7 @@ export default function HomeSearch({ terms, guidelines, rules, pillars, products
 
       {/* Dropdown */}
       {showDropdown && (
-        <div className="absolute top-full z-50 mt-2 w-full overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl">
+        <div className="absolute top-full z-50 mt-2 max-h-[70vh] w-full overflow-y-auto overflow-x-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl">
           {!hasResults ? (
             <p className="px-5 py-4 text-sm text-neutral-400">No results for &ldquo;{query}&rdquo;</p>
           ) : (
