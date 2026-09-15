@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getSectionVisibility } from '@/lib/site-settings'
 import { apiJson, apiError } from '@/lib/api/response'
+import { getGuidelinesList } from '@/lib/api/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,10 +10,7 @@ export async function GET() {
   if (!vis.guidelines) return apiError(404, 'not_found')
 
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('guidelines')
-    .select('id, title, slug, order_index')
-    .order('order_index', { ascending: true })
+  const { data, error } = await getGuidelinesList(supabase)
 
   if (error) return apiError(500, 'internal_error')
 

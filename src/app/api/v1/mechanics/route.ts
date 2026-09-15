@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getSectionVisibility } from '@/lib/site-settings'
 import { apiJson, apiError } from '@/lib/api/response'
+import { getMechanicsRules } from '@/lib/api/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,10 +10,7 @@ export async function GET() {
   if (!vis.mechanics) return apiError(404, 'not_found')
 
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('mechanics_rules')
-    .select('id, rule, category, example, dont_example, description, order_index, data, updated_at')
-    .order('order_index', { ascending: true })
+  const { data, error } = await getMechanicsRules(supabase)
 
   if (error) return apiError(500, 'internal_error')
 

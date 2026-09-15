@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getSectionVisibility } from '@/lib/site-settings'
 import { apiJson, apiError } from '@/lib/api/response'
+import { getGlossaryTerms } from '@/lib/api/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,12 +10,7 @@ export async function GET() {
   if (!vis.glossary) return apiError(404, 'not_found')
 
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('glossary_terms')
-    .select('id, term, term_bahasa, definition, avoid, category, tags, updated_at')
-    .eq('status', 'published')
-    .order('term_bahasa', { ascending: true, nullsFirst: false })
-    .order('term', { ascending: true })
+  const { data, error } = await getGlossaryTerms(supabase)
 
   if (error) return apiError(500, 'internal_error')
 

@@ -16,6 +16,33 @@ If a content section is toggled off in the dashboard, its endpoints return `404 
 
 ---
 
+## `GET /api/v1/all`
+
+Everything in one call — full content for every section, not the shallow list shape the individual `/guidelines` and `/tone` endpoints use. Useful for a full sync, building a search index, or an offline cache, instead of making four separate requests.
+
+Unlike the individual endpoints, this one doesn't 404 when a section is toggled off — that section's key is just `null`, so a single hidden section doesn't block the rest of the response.
+
+```json
+{
+  "data": {
+    "glossary": [ /* same shape as GET /api/v1/glossary, or null if hidden */ ],
+    "guidelines": [
+      { "id": "…", "title": "…", "slug": "…", "content": "## Markdown body…", "order_index": 0, "updated_at": "…" }
+    ],
+    "mechanics": [ /* same shape as GET /api/v1/mechanics, or null if hidden */ ],
+    "tone": [
+      {
+        "product": { "id": "…", "name": "Flip Core", "slug": "flip-core", "description": "…", "features": [], "order_index": 0, "updated_at": "…" },
+        "brandConstants": [{ "id": "…", "constant": "Fair", "heading": "…", "description": "…", "order_index": 0 }],
+        "tonePillars": [{ "id": "…", "title": "…", "description": "…", "do_example": "…", "dont_example": "…", "order_index": 0 }]
+      }
+    ]
+  }
+}
+```
+
+Note: `guidelines` here has full `content` per item (unlike the shallow `GET /api/v1/guidelines` list), and `tone` is an array covering every product (unlike `GET /api/v1/tone`, which is a lightweight name/slug index).
+
 ## `GET /api/v1/glossary`
 
 All published glossary terms.

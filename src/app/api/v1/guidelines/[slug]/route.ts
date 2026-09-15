@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { getSectionVisibility } from '@/lib/site-settings'
 import { apiJson, apiError } from '@/lib/api/response'
+import { getGuidelineBySlug } from '@/lib/api/queries'
 
 export const dynamic = 'force-dynamic'
 
@@ -13,11 +14,7 @@ export async function GET(
 
   const { slug } = await params
   const supabase = await createClient()
-  const { data, error } = await supabase
-    .from('guidelines')
-    .select('id, title, slug, content, order_index, updated_at')
-    .eq('slug', slug)
-    .single()
+  const { data, error } = await getGuidelineBySlug(supabase, slug)
 
   if (error || !data) return apiError(404, 'not_found')
 
