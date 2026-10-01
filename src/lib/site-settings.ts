@@ -5,6 +5,7 @@ export type SectionVisibility = {
   guidelines: boolean
   mechanics: boolean
   tone: boolean
+  tools: boolean
 }
 
 export async function getSectionVisibility(): Promise<SectionVisibility> {
@@ -20,5 +21,6 @@ export async function getSectionVisibility(): Promise<SectionVisibility> {
     guidelines: raw.guidelines !== false,
     mechanics:  raw.mechanics  !== false,
     tone:       raw.tone       !== false,
+    tools:      raw.tools      !== false,
   }
 }

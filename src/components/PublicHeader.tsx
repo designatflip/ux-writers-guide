@@ -10,17 +10,9 @@ const NAV_LINKS = [
   { href: '/guidelines', label: 'Guidelines' },
   { href: '/tone', label: 'Tone' },
   { href: '/mechanics', label: 'Mechanics' },
-  { href: 'https://chatgpt.com/g/g-MZzZ3sLGD-ux-writing', label: 'Writing Assistant', external: true },
+  { href: '/tools', label: 'Tools' },
   { href: '/entries', label: 'Dashboard' },
 ]
-
-function ExternalLinkIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M7 17L17 7M17 7H7M17 7v10" />
-    </svg>
-  )
-}
 
 export default function PublicHeader({ searchData }: { searchData: SearchData }) {
   const [open, setOpen] = useState(false)
@@ -29,7 +21,7 @@ export default function PublicHeader({ searchData }: { searchData: SearchData })
     <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
-          <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8" />
+          <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8 rounded-full object-cover object-left" />
           <span className="text-sm font-bold text-neutral-900">Flip Communication Hub</span>
         </Link>
 
@@ -38,22 +30,19 @@ export default function PublicHeader({ searchData }: { searchData: SearchData })
         </div>
 
         <nav className="ml-auto hidden items-center gap-6 md:flex">
-          {NAV_LINKS.map((l) => {
-            const className =
-              l.href === '/entries'
-                ? 'text-sm font-semibold text-neutral-900 transition-colors hover:text-neutral-600'
-                : 'flex items-center gap-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900'
-            return l.external ? (
-              <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className={className}>
-                {l.label}
-                <ExternalLinkIcon />
-              </a>
-            ) : (
-              <Link key={l.href} href={l.href} className={className}>
-                {l.label}
-              </Link>
-            )
-          })}
+          {NAV_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={
+                l.href === '/entries'
+                  ? 'text-sm font-semibold text-neutral-900 transition-colors hover:text-neutral-600'
+                  : 'text-sm text-neutral-600 transition-colors hover:text-neutral-900'
+              }
+            >
+              {l.label}
+            </Link>
+          ))}
         </nav>
 
         <button
@@ -79,22 +68,20 @@ export default function PublicHeader({ searchData }: { searchData: SearchData })
         <div className="border-t border-neutral-200 px-6 py-4 md:hidden">
           <HomeSearch variant="compact" {...searchData} />
           <nav className="mt-4 flex flex-col gap-1">
-            {NAV_LINKS.map((l) => {
-              const className =
-                l.href === '/entries'
-                  ? 'rounded-lg px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-50'
-                  : 'flex items-center gap-1.5 rounded-lg px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
-              return l.external ? (
-                <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className={className}>
-                  {l.label}
-                  <ExternalLinkIcon />
-                </a>
-              ) : (
-                <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className={className}>
-                  {l.label}
-                </Link>
-              )
-            })}
+            {NAV_LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className={
+                  l.href === '/entries'
+                    ? 'rounded-lg px-2 py-2 text-sm font-semibold text-neutral-900 hover:bg-neutral-50'
+                    : 'rounded-lg px-2 py-2 text-sm text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900'
+                }
+              >
+                {l.label}
+              </Link>
+            ))}
           </nav>
         </div>
       )}

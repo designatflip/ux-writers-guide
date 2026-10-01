@@ -44,19 +44,16 @@ export default async function Home() {
       <header className="sticky top-0 z-10 border-b border-neutral-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center gap-4 px-6 py-3">
           <Link href="/" className="flex shrink-0 items-center gap-2.5">
-            <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8" />
+            <img src="https://flip.id/assets/images/homepage-v2/flip-logo.png" alt="Flip" className="h-8 w-8 rounded-full object-cover object-left" />
             <span className="text-sm font-bold text-neutral-900">Flip Communication Hub</span>
           </Link>
           <div className="ml-auto flex items-center gap-6">
-            <a
-              href="https://chatgpt.com/g/g-MZzZ3sLGD-ux-writing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900 transition-colors sm:flex"
+            <Link
+              href="/tools"
+              className="hidden text-sm text-neutral-600 hover:text-neutral-900 transition-colors sm:inline"
             >
-              Writing Assistant
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-            </a>
+              Tools
+            </Link>
             <Link href="/entries" className="text-sm font-semibold text-neutral-900 hover:text-neutral-600 transition-colors">Dashboard</Link>
           </div>
         </div>

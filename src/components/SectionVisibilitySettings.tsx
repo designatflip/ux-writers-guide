@@ -8,12 +8,13 @@ const SECTIONS = [
   { key: 'guidelines', label: 'Writing Guidelines',          description: 'Rules that keep our writing consistent' },
   { key: 'mechanics',  label: 'Punctuation & Mechanics',     description: 'Technical rules for polished writing' },
   { key: 'tone',       label: 'Tone of Voice Pillars',       description: 'How we sound in everything we write' },
+  { key: 'tools',      label: 'Tools',                       description: 'The Figma plugin, Claude Skill, custom GPT, and other tools' },
 ] as const
 
 type SectionKey = typeof SECTIONS[number]['key']
 type Visibility = Record<SectionKey, boolean>
 
-const DEFAULT: Visibility = { glossary: true, guidelines: true, mechanics: true, tone: true }
+const DEFAULT: Visibility = { glossary: true, guidelines: true, mechanics: true, tone: true, tools: true }
 
 function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
   return (

@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client'
-import type { GlossaryTerm, Guideline, TonePillar, BrandConstant, Product, MechanicsRule } from '@/types'
+import type { GlossaryTerm, Guideline, TonePillar, BrandConstant, Product, MechanicsRule, Tool } from '@/types'
 
 export const productStore = {
   async list(): Promise<Product[]> {
@@ -253,6 +253,46 @@ export const mechanicsRuleStore = {
     const supabase = createClient()
     const { error } = await supabase
       .from('mechanics_rules')
+      .delete()
+      .eq('id', id)
+    if (error) throw error
+  },
+}
+
+export const toolStore = {
+  async list(): Promise<Tool[]> {
+    const supabase = createClient()
+    const { data } = await supabase
+      .from('tools')
+      .select('*')
+      .order('updated_at', { ascending: false })
+    return data ?? []
+  },
+
+  async create(data: Omit<Tool, 'id' | 'created_at' | 'updated_at'>): Promise<Tool> {
+    const supabase = createClient()
+    const { data: created, error } = await supabase
+      .from('tools')
+      .insert(data)
+      .select()
+      .single()
+    if (error) throw error
+    return created
+  },
+
+  async update(id: string, data: Partial<Tool>): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('tools')
+      .update({ ...data, updated_at: new Date().toISOString() })
+      .eq('id', id)
+    if (error) throw error
+  },
+
+  async delete(id: string): Promise<void> {
+    const supabase = createClient()
+    const { error } = await supabase
+      .from('tools')
       .delete()
       .eq('id', id)
     if (error) throw error

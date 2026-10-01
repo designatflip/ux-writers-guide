@@ -93,6 +93,25 @@ export type MechanicsRule = {
   updated_at: string
 }
 
+export type ToolLinkType = 'url' | 'download' | 'instructions'
+
+export type Tool = {
+  id: string
+  name: string
+  slug: string | null
+  type: string
+  description: string
+  content: string | null
+  image_url: string | null
+  link_type: ToolLinkType
+  url: string | null
+  instructions: string | null
+  order_index: number
+  created_by: string | null
+  created_at: string
+  updated_at: string
+}
+
 export type UserRole = 'editor' | 'viewer'
 
 export type ActivityAction = 'create' | 'update' | 'delete'
