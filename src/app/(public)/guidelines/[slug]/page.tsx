@@ -24,7 +24,7 @@ export default async function GuidelineDetailPage({ params }: Props) {
     return (
       <div className="max-w-2xl">
         <Link href="/guidelines" className="mb-6 inline-flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900">
-          ← Back to Guidelines
+          ← Back to Component Guidelines
         </Link>
         <div className="mt-16 rounded-xl border border-dashed border-neutral-200 py-24 text-center">
           <p className="text-base font-semibold text-neutral-200">Coming soon</p>
@@ -45,7 +45,7 @@ export default async function GuidelineDetailPage({ params }: Props) {
   return (
     <div className="max-w-2xl">
       <Link href="/guidelines" className="mb-6 inline-flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900">
-        ← Back to Guidelines
+        ← Back to Component Guidelines
       </Link>
       <h1 className="mb-2 text-3xl font-bold text-neutral-900">{guideline.title}</h1>
       <p className="mb-8 text-sm text-neutral-400">Updated {formatDate(guideline.updated_at)}</p>

@@ -30,8 +30,8 @@ export default function DashboardGuidelinesPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-neutral-900">Guidelines</h1>
-          <p className="text-sm text-neutral-600">Manage writing guidelines</p>
+          <h1 className="text-2xl font-bold text-neutral-900">Component Guidelines</h1>
+          <p className="text-sm text-neutral-600">Manage component guidelines</p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="secondary" onClick={() => setShowImport(true)}>Import CSV</Button>

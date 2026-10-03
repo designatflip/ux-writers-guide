@@ -7,7 +7,7 @@ import type { SearchData } from '@/lib/search-data'
 
 const NAV_LINKS = [
   { href: '/glossary', label: 'Glossary' },
-  { href: '/guidelines', label: 'Guidelines' },
+  { href: '/guidelines', label: 'Component Guidelines' },
   { href: '/tone', label: 'Tone' },
   { href: '/mechanics', label: 'Mechanics' },
   { href: '/tools', label: 'Tools' },

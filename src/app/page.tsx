@@ -73,12 +73,12 @@ export default async function Home() {
 
         <div className="mx-auto mt-4 flex max-w-2xl justify-center">
           <a
-            href="https://chatgpt.com/g/g-MZzZ3sLGD-ux-writing"
+            href="/downloads/flip-ux-writing-skill.zip"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full bg-flip-orange-100 px-4 py-2 text-sm font-medium text-flip-orange-900 ring-1 ring-inset ring-flip-orange/20 transition-colors hover:bg-flip-orange-200"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-flip-orange transition-colors hover:text-flip-orange-700 hover:underline"
           >
-            Have a copy to check? Need crafting? Try our Writing Assistant!
+            Building a project? Import our UX Writing Skill so your project sounds like Flip!
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
           </a>
         </div>
@@ -152,7 +152,7 @@ export default async function Home() {
               </svg>
               <div className="flex items-start justify-between">
                 <h2 className="text-2xl font-semibold leading-tight text-white">
-                  Writing<br />
+                  Component<br />
                   <span className="font-light">guidelines</span>
                 </h2>
                 <Link href="/guidelines" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20 text-white transition-colors hover:bg-white/30">

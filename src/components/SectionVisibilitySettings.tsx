@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 
 const SECTIONS = [
   { key: 'glossary',   label: 'Word list & Glossary',       description: 'Terms, preferred spellings, and definitions' },
-  { key: 'guidelines', label: 'Writing Guidelines',          description: 'Rules that keep our writing consistent' },
+  { key: 'guidelines', label: 'Component Guidelines',        description: 'Rules that keep our writing consistent' },
   { key: 'mechanics',  label: 'Punctuation & Mechanics',     description: 'Technical rules for polished writing' },
   { key: 'tone',       label: 'Tone of Voice Pillars',       description: 'How we sound in everything we write' },
   { key: 'tools',      label: 'Tools',                       description: 'The Figma plugin, Claude Skill, custom GPT, and other tools' },

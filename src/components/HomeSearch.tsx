@@ -122,7 +122,7 @@ export default function HomeSearch({ terms, guidelines, rules, pillars, products
 
               {matchedGuidelines.length > 0 && (
                 <div className={matchedTerms.length > 0 ? 'border-t border-neutral-50' : ''}>
-                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">Guidelines</p>
+                  <p className="px-5 pb-1 pt-3 text-[11px] font-bold uppercase tracking-widest text-neutral-400">Component Guidelines</p>
                   {matchedGuidelines.map((g) => (
                     <Link
                       key={g.id}

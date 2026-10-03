@@ -14,7 +14,7 @@ export default async function GuidelinesPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="mb-1 text-3xl font-bold text-neutral-900">Guidelines</h1>
+          <h1 className="mb-1 text-3xl font-bold text-neutral-900">Component Guidelines</h1>
           <p className="text-neutral-600">Writing principles and conventions for our products.</p>
         </div>
         <div className="rounded-xl border border-dashed border-neutral-200 py-24 text-center">
@@ -33,7 +33,7 @@ export default async function GuidelinesPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-1 text-3xl font-bold text-neutral-900">Guidelines</h1>
+        <h1 className="mb-1 text-3xl font-bold text-neutral-900">Component Guidelines</h1>
         <p className="text-neutral-600">Writing principles and conventions for our products.</p>
       </div>
 
