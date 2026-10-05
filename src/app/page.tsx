@@ -268,15 +268,15 @@ export default async function Home() {
               </div>
               <p className="mt-3 text-sm text-white/70">Our personality on the page — how we sound in everything we write.</p>
               <p className="mt-5 text-xs font-bold uppercase tracking-[0.15em] text-white/50">
-                {pillarList.length} {pillarList.length === 1 ? 'pillar' : 'pillars'}
+                {productList.length} {productList.length === 1 ? 'product' : 'products'}
               </p>
             </div>
             <div className="flex-1 bg-white p-5">
-              {!vis.tone ? <ComingSoon /> : pillarList.length === 0 ? (
-                <p className="text-sm text-neutral-400">No pillars yet — add the first one in the dashboard.</p>
+              {!vis.tone ? <ComingSoon /> : productList.length === 0 ? (
+                <p className="text-sm text-neutral-400">No products yet — add the first one in the dashboard.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
-                  {pillarList.map((p, i) => {
+                  {productList.map((p, i) => {
                     const pillColors = [
                       'bg-golden-100 text-golden-900 ring-1 ring-inset ring-golden/20',
                       'bg-crimson-100 text-crimson-900 ring-1 ring-inset ring-crimson/20',
@@ -285,9 +285,13 @@ export default async function Home() {
                       'bg-mauve-100 text-mauve-900 ring-1 ring-inset ring-mauve/20',
                     ]
                     return (
-                      <span key={p.id} className={`rounded-full px-4 py-1.5 text-sm font-medium ${pillColors[i % pillColors.length]}`}>
-                        {p.title}
-                      </span>
+                      <Link
+                        key={p.id}
+                        href={`/tone/${p.slug}`}
+                        className={`rounded-full px-4 py-1.5 text-sm font-medium transition-opacity hover:opacity-80 ${pillColors[i % pillColors.length]}`}
+                      >
+                        {p.name}
+                      </Link>
                     )
                   })}
                 </div>
