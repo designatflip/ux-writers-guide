@@ -168,7 +168,7 @@ function MechanicsRuleCard({ rule }: { rule: MechanicsRule }) {
 }
 
 function slugify(s: string) {
-  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────
